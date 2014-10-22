@@ -35,7 +35,9 @@ module.exports.routes = {
   '/': {
     // view: 'homepage'
     view: 'home/index'
-  }
+  },
+
+  "/Article/test": 'ArticleController.test',
 
   /***************************************************************************
   *                                                                          *
