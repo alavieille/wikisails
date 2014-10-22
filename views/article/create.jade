@@ -1,0 +1,13 @@
+extends ../layout
+block body
+    if (typeof(err) !== 'undefined')
+        each val, index in err.invalidAttributes
+            - console.log(val)
+            p #{index}
+            each tt in val
+                p #{tt.message}
+    form(action='/Article/create',method='post')
+        label(for='titre') Titre
+        input(type='text',name='Article[title]',id='titre')  
+        textarea(name='Article[content]', rows='10', cols='30')
+        input(type='submit')

@@ -15,7 +15,10 @@ module.exports = {
 		  	 sails.log.info("oki");  
 
 		     Article.create(req.param("Article")).exec(function(err,created){
+		     	sails.log.info(JSON.stringify(err));
 		     	console.log(err);
+		     	if(err)
+		     		res.view({err:err});
   				// console.log('Created user with name '+created.title);
   			});
 
