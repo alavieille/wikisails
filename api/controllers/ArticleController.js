@@ -10,33 +10,34 @@ module.exports = {
 	create : function(req,res){
 		 
 		  if(req.method=="POST"	&& req.param("Article",null)!=null){
-		  	 sails.log.info(req.method=="POST");  
-		  	 sails.log.info(req.param("Article",null));  
-		  	 sails.log.info("oki");  
-
 		     Article.create(req.param("Article")).exec(function(err,created){
-		     	sails.log.info(JSON.stringify(err));
-		     	console.log(err);
 		     	if(err)
-		     		res.view({err:err});
-  				// console.log('Created user with name '+created.title);
+		     		return res.view({errors:err,article:req.param("Article")});
+  				console.log(created);
   			});
 
 		  }
-		  sails.log.info("view");  
-		  res.view();
-	}	
+		  return res.view();
+	},
+
+
+	list : function(req,res){
+		Article.find({}).exec(function(err,articles){
+			res.view({articles:articles});
+ 		});
+	},
+
+	view : function(req,res){
+		console.log(req.param('id'));
+		if(req.param('id')==null)
+			return res.notFound("Paramêtre manquant");
+		Article.findOne({id:req.param('id')}).exec(function(err,article){
+			 if (err) return res.serverError(err);
+  			 if (!article) return res.notFound(article);
+  			 console.log(article.title);
+  			 return res.view({article:article});
+  		});
+	}
 };
 
- // findByPseudo: function (req, res) {     
- // 	sails.log.debug("*******************findByPseudo");     
- // 	User.findOneByPseudo(req.body.pseudo).done(function (err, user) { 
- // 	      if (err) res.json({ error: 'oups error' }, 500);       
- // 	      if (user) {  
- // 	               res.json(user)
- // 	       } 
- // 	      else {         
- // 	      	res.json({ message: 'User not found' });       
- // 	      }    
- // 	  });   
- // 	}
+ 

@@ -37,7 +37,11 @@ module.exports.routes = {
     view: 'home/index'
   },
 
-  "/Article/test": 'ArticleController.test',
+  "/article/create": 'ArticleController.create',
+
+  "/article": 'ArticleController.list',
+
+  "/article/:id": 'ArticleController.view',
 
   /***************************************************************************
   *                                                                          *

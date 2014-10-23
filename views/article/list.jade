@@ -1,0 +1,13 @@
+extends ../layout
+block content
+	h2 Liste des articles
+	if (articles.length > 0)
+		div.list-group
+			each article in articles
+				div.list-group-item
+					h4 #{article.title}
+					p  #{article.content}
+				div.list-group-separator
+	else
+		p Aucun article
+
