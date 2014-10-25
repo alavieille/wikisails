@@ -4,3 +4,7 @@ block content
 		div.well
 			h2 #{article.title}
 			p #{article.content}
+			div.btn-group
+				a(href="/article/edit/"+article.id).btn.btn-primary Editer
+			div.btn-group
+				a(href="/article/delete/"+article.id,onclick="confirm('êtes-vous sur ?');").btn.btn-warning Supprimer

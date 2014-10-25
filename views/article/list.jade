@@ -1,6 +1,11 @@
 extends ../layout
 block content
 	h2 Liste des articles
+	- var message = req.flash('info');
+	if( message.length > 0)
+		div.alert.alert-dismissable.alert-success
+			button(type='button',data-dismiss='alert').close x
+			p  #{message}
 	if (articles.length > 0)
 		div.list-group
 			each article in articles

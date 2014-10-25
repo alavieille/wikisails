@@ -43,6 +43,12 @@ module.exports.routes = {
 
   "/article/:id": 'ArticleController.view',
 
+  "/article/view/:id" : '/article/:id',
+
+  "/article/delete/:id" : 'ArticleController.delete',
+
+  "/article/edit/:id" : 'ArticleController.edit',
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

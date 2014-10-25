@@ -1,0 +1,27 @@
+extends ../layout
+block content
+    div.row
+        div.col-lg-12
+            div.well.bs-component
+                form(action='/Article/create',method='post',role='form').form-horizontal
+                    fieldset
+                        legend Mise à jour
+                        if (typeof(errors) !== 'undefined')
+                            div.alert.alert-dismissable.alert-danger
+                                button(type='button',data-dismiss='alert').close x
+                                ul
+                                    each error, index in errors.invalidAttributes
+                                        li #{index} :
+                                            each errorAttributes in error
+                                                p #{errorAttributes.message}
+                        div.form-group  
+                            label(for='titre').control-label.col-lg-2 Titre
+                            div.col-lg-10
+                                input(type='text',name='Article[title]',value="#{ article ? article.title : '' }",id='titre').form-control
+                        div.form-group
+                            label(for='contenue').control-label.col-lg-2 Contenue   
+                            div.col-lg-10   
+                                textarea(name='Article[content]', rows='10', cols='30').form-control #{ article ? article.content : '' }
+                        div.form-group
+                            div.col-lg-10.col-lg-offset-2
+                                input(type='submit').btn.btn-primary
