@@ -9,11 +9,13 @@ module.exports = {
 	
 	create : function(req,res){	 
 		  if(req.method=="POST"	&& req.param("Article",null)!=null){
+		  	 console.log(req.param("Sections"));
 		     Article.create(req.param("Article")).exec(function(err,created){
 		     	if(err)
 		     		return res.view({errors:err,article:req.param("Article")});
   				return res.redirect("/article/"+created.id);
   			});
+
 		  }
 		  else
 		  	return res.view();
