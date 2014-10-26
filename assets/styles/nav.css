@@ -1,0 +1,18 @@
+.navigation{
+	background-color: #f6f6f6;
+	padding-top: 50px;
+}
+
+.navigation ul{
+	padding-left: 0;
+}
+.navigation ul li{
+	
+}
+.navigation ul li a {
+
+	color: #777;
+	display: block;
+	padding: 10px 0;
+	font-size: 1.3em;
+}

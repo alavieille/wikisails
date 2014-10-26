@@ -1,0 +1,14 @@
+.logo{
+	background-color: #fff;
+	padding: 40px;
+}
+
+.logo a{
+	color: #000;
+}
+
+.logo h1{
+	font-size: 5.5em;
+	font-style: italic;
+	margin-top: 0;
+}

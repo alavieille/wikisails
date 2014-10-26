@@ -1,10 +1,36 @@
-extends ../layout
+extends ../main
+
+block nav
+    li: a(href="/article/delete/"+article.id,onclick="confirm('êtes-vous sur ?');"): span.glyphicon.glyphicon-remove
+    li: a(href="/article/edit/"+article.id,title="editer"): span.glyphicon.glyphicon-edit
+
 block content
-	div.row
-		div.well
-			h2 #{article.title}
-			p #{article.content}
-			div.btn-group
-				a(href="/article/edit/"+article.id).btn.btn-primary Editer
-			div.btn-group
-				a(href="/article/delete/"+article.id,onclick="confirm('êtes-vous sur ?');").btn.btn-warning Supprimer
+    div.row.article-row
+        nav.article-relation.col-md-2
+            h4 Relations
+            ul
+                li: a(href="") toto
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+                li: a(href="") tota
+     
+
+        article.col-md-7.article
+            //- h2 #{article.title}
+            h2.article-title Martinique
+            div.article-content
+                //- !{content}
+                
+                !{article.content}
+
+        aside.col-md-3.article-aside
+            h4.article-title.text-center Martinique

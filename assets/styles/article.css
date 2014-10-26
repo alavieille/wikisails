@@ -1,0 +1,15 @@
+article{
+	background-color: #fff;
+	padding: 50px 80px !important;
+	border-left: 1px solid #edebeb;
+	border-right: 1px solid #edebeb;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+
+	font-size: 1.13em !important;
+}
+
+article .article-title{
+	font-size: 2.9em;
+	padding-bottom: 30px;
+}
+

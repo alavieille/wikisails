@@ -1,0 +1,39 @@
+doctype html
+html(lang="fr")
+  head
+  title WikiSails
+  meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+  link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700|Alike")
+  // STYLES
+  link(rel="stylesheet", href="/styles/article.css")
+  link(rel="stylesheet", href="/styles/bootstrap-markdown.min.css")
+  link(rel="stylesheet", href="/styles/bootstrap/bootstrap.min.css")
+  link(rel="stylesheet", href="/styles/cover.css")
+  link(rel="stylesheet", href="/styles/header.css")
+  link(rel="stylesheet", href="/styles/logo.css")
+  link(rel="stylesheet", href="/styles/main.css")
+  link(rel="stylesheet", href="/styles/nav.css")
+  // STYLES END
+
+body
+    section.content.container-fluid
+      header.main-header.row
+        h1.pull-left WikiSails
+        nav.container.navigation
+          div.col-md-6.col-md-offset-3
+            ul.list-inline.pull-right
+              li: a(href="/",title="Rechercher"): span.glyphicon.glyphicon-search
+              li: a(href="/article/create",title="Nouvel article"): span.glyphicon.glyphicon-font
+              block nav
+      block content
+
+
+script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+// SCRIPTS
+script(src="/js/dependencies/sails.io.js")
+script(src="/js/dependencies/bootstrap/bootstrap.min.js")
+script(src="/js/dependencies/markdown/bootstrap-markdown.js")
+script(src="/js/dependencies/markdown/markdown.min.js")
+script(src="/js/dependencies/markdown/to-markdown.js")
+script(src="/js/main.js")
+// SCRIPTS END

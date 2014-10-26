@@ -1,0 +1,14 @@
+
+/* Header */
+.main-header{
+	/*background-color: rgba(127,171,220,1);*/
+	background-color: #777;
+	height: 50px;
+}
+
+.main-header h1{
+	margin: 0;
+	text-align: center;
+	line-height: 50px;
+	color:#fff;
+}
