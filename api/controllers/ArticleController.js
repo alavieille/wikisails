@@ -9,11 +9,11 @@ module.exports = {
 	
 	create : function(req,res){	 
 		  if(req.method=="POST"	&& req.param("Article",null)!=null){
-		  	 console.log(req.param("Sections"));
 		     Article.create(req.param("Article")).exec(function(err,created){
 		     	if(err)
 		     		return res.view({errors:err,article:req.param("Article")});
-  				return res.redirect("/article/"+created.id);
+		     	console.log(created);
+  			    return res.redirect("/article/"+created.id);
   			});
 
 		  }
@@ -24,6 +24,7 @@ module.exports = {
 
 	list : function(req,res){
 		Article.find({}).exec(function(err,articles){
+			console.log(articles);
 			res.view({articles:articles});
  		});
 	},
@@ -32,6 +33,7 @@ module.exports = {
 		if(req.param('id')==null)
 			return res.notFound("Paramêtre manquant");
 		Article.findOne({id:req.param('id')}).exec(function(err,article){
+			console.log(article);
 			 if (err) return res.serverError(err);
   			 if (!article) return res.notFound(article);
   			 return res.view({article:article});

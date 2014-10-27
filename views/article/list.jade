@@ -1,18 +1,19 @@
-extends ../layout
+extends ../main
 block content
-	h2 Liste des articles
-	- var message = req.flash('info');
-	if( message.length > 0)
-		div.alert.alert-dismissable.alert-success
-			button(type='button',data-dismiss='alert').close x
-			p  #{message}
-	if (articles.length > 0)
-		div.list-group
-			each article in articles
-				div.list-group-item
-					h4 #{article.title}
-					p  #{article.content}
-				div.list-group-separator
-	else
-		p Aucun article
+	div.panel.panel-default
+		h2 Liste des articles
+		- var message = req.flash('info');
+		if( message.length > 0)
+			div.alert.alert-dismissable.alert-success
+				button(type='button',data-dismiss='alert').close x
+				p  #{message}
+		if (articles.length > 0)
+			div.list-group
+				each article in articles
+					div.list-group-item
+						h4 #{article.title}
+						p  #{article.content}
+					div.list-group-separator
+		else
+			p Aucun article
 

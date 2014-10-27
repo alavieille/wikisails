@@ -1,10 +1,10 @@
 .navigation{
 	background-color: #f6f6f6;
-	padding-top: 50px;
 }
 
 .navigation ul{
 	padding-left: 0;
+	margin-bottom: 0;
 }
 .navigation ul li{
 	

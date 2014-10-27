@@ -1,8 +1,7 @@
 
 /* Header */
 .main-header{
-	/*background-color: rgba(127,171,220,1);*/
-	background-color: #777;
+	background-color: #f6f6f6;
 	height: 50px;
 }
 
@@ -10,5 +9,6 @@
 	margin: 0;
 	text-align: center;
 	line-height: 50px;
-	color:#fff;
+	color:#333;
+	padding-left: 20px;
 }
