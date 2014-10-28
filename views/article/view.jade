@@ -1,4 +1,6 @@
 extends ../layouts/three-column
+block localscript
+        script(src="/js/article.js")
 
 block nav
     li: a(href="/article/delete/"+article.id,onclick="confirm('êtes-vous sur ?');"): span.glyphicon.glyphicon-remove

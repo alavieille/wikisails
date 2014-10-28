@@ -1,7 +1,7 @@
 var dbpedia = new function(){
 	this.url = "http://dbpedia.org/sparql";
 
-	this.searchRef = function(contentSearch,callback){
+	this.searchRef = function(contentSearch,callback,paremeter){
 		var query = [
 			 "SELECT DISTINCT ?r ?label ?abstract",
 			 "WHERE {",
@@ -16,7 +16,7 @@ var dbpedia = new function(){
 		this.execQuery(query,callback);
 	};
 
-	this.getInfoRessource = function(Uriressource,callback){
+	this.getInfoRessource = function(Uriressource,callback,parameter){
 		var query = [
 			"SELECT ?label ?abstract ?thumbnail ?wikipage",
 			"WHERE {",
@@ -31,19 +31,17 @@ var dbpedia = new function(){
     			"}",
     		"} LIMIT 1",
  		].join(" ");
-
- 		console.log(query);
- 		this.execQuery(query,callback);
+ 		this.execQuery(query,callback,parameter);
 	};
 
-	this.execQuery = function(query,callback){
+	this.execQuery = function(query,callback,parameter){
 		var queryUrl =  this.url+"?query="+ encodeURIComponent(query) +"&format=json";
 		$.ajax({
 	        dataType: "jsonp",  
 	        url: queryUrl,
 	        success: function( _data ) {
 	            var results = _data.results.bindings;
-	           	callback(results);
+	           	callback(results,parameter);
 	        }
     	});
 	}

@@ -13,9 +13,20 @@ article .article-title{
 	padding-bottom: 30px;
 }
 
+article .article-content .popover{
+	max-width: 800px !important;
+}
+
+
+article .article-content .popover .popover-thumbnail{
+	float: left;
+	max-width: 150px !important;
+	margin:10px;
+}
 
 
 .content .create-article{
 	margin-top: 20px;
 	padding: 20px;
 }
+

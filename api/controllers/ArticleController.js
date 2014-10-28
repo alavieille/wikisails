@@ -46,7 +46,7 @@ module.exports = {
 		if(req.method=="POST" && req.param("Article",null)!=null){
 			Article.update({id:req.param('id')},req.param("Article")).exec(function(err,updated){
 		 		if(err)
-		      		return res.view({errors:err,article:req.param("Article")});
+		      		return res.view("article/create",{errors:err,article:req.param("Article")});
 				return res.redirect("/article/"+created.id);
 		 	});
 		}
@@ -54,7 +54,7 @@ module.exports = {
 		  	Article.findOne({id:req.param('id')}).exec(function(err,article){
 		  	 if (err) return res.serverError(err);
   			 if (!article) return res.notFound(article);
-  			 return res.view({article:article});
+  			 return res.view("article/create",{article:article});
   			});
 		}
 

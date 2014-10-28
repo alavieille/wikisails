@@ -32,22 +32,21 @@ var searhRef = function(evt){
 
 
 var extractRef = function(result){
+
   var resHthml = "";
   if(result.length == 0)
-    resHthml += "<p> Aucun résultat </p>";
+    resHthml += "<h5 class='text-center'> Aucun résultat </h5>";
   else{
-    resHthml += "<ul>";
+    resHthml += "<ul class='list-group'>";
     $.each(result,function( index, element ) {
       var label = element.label.value;
       var uriRessource = element.r.value;
-      resHthml += "<li class='ref-wiki' data-uri='"+uriRessource+"'>"+label+'</li>';
+      resHthml += "<li class='ref-wiki list-group-item' data-uri='"+uriRessource+"'>"+label+'</li>';
     });
     resHthml += "</ul>";
   }
   $("#wiki-modal #res-wiki-article").html(resHthml);
-  console.log("ok");
   $("#wiki-modal #res-wiki-article .ref-wiki").click(function(){
-    console.log("ok");
     var label = $(this).text();
     var uriRessource = $(this).attr("data-uri");
 
