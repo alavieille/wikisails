@@ -22,8 +22,18 @@ block content
                             div.form-group
                                 label(for='contenue').control-label.col-lg-2 Contenue   
                                 div.col-lg-10   
-                                    textarea(name='Article[content]', data-provide="markdown" rows='10', cols='30').form-control #{ article ? article.content : '' }
+                                    textarea(name='Article[content]', id="markdown-editor" rows='10', cols='30').form-control #{ article ? article.content : '' }
                             div.form-group
                                 div.col-lg-10.col-lg-offset-2
                                     input(type='submit').btn.btn-primary
+
+                    div.modal#wiki-modal
+                        div.modal-dialog.modal-sm
+                            div.modal-content
+                                div.modal-header
+                                    h5.modal-title Référence Wikipedia
+                                div.modal-body
+                                    input(type="search",placeholder="Rechercher un article").form-control#searchRef
+                                    div#res-wiki-article
+
 
