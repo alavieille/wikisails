@@ -5,18 +5,18 @@ body .cover{
     align-items: center;
 }
 
-
-.cover .inner-cover{
-	color: white;
-}
-
 .cover .inner-cover h1{
 	font-size: 5em;
 	font-weight: normal;
 	letter-spacing: 1.5px;
+	font-family: 'EB Garamond', serif;
 }
 
 .cover .inner-cover .search-input{
 	height: 40px;
 	margin-top: 30px;
+}
+
+.cover .inner-cover h2 span.glyphicon-search {
+	font-size: 2em;
 }

@@ -1,14 +1,29 @@
+@font-face{
+	font-family: 'EB Garamond';
+	src: url(./fonts/EBGaramond-Regular.ttf);
+}
 
 /* Header */
 .main-header{
-	background-color: #f6f6f6;
-	height: 50px;
+	background-color: #fff;
 }
-
-.main-header h1{
+#logo {
+	font-family: 'EB Garamond', serif;
+}
+#logo h1 {
+	font-size: 6em;
 	margin: 0;
 	text-align: center;
-	line-height: 50px;
-	color:#333;
-	padding-left: 20px;
+	color:#000;
+}
+#logo a {
+	color: #000;
+}
+#logo h2 {
+	margin: 0;
+	font-size: 2.5em;
+	text-transform: uppercase;
+}
+#logo a:hover {
+	text-decoration: none;
 }

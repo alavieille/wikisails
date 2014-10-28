@@ -1,12 +1,16 @@
 extends ../main
 
 block content
-	section.content.container-fluid
-	      header.main-header.row
-	        h1.pull-left WikiSails
-	        nav.container.navigation
-	          div.col-md-6.col-md-offset-3
-	            ul.list-inline.pull-right
-	              li: a(href="/",title="Rechercher"): span.glyphicon.glyphicon-search
-	              li: a(href="/article/create",title="Nouvel article"): span.glyphicon.glyphicon-font
-	              block nav
+  section.content.container-fluid
+    header.main-header.row
+      div.col-sm-3
+        include ../logo
+     
+      nav.container.navigation.col-sm-9
+        ul.list-inline.pull-right
+          block nav
+            li: a(href="/",title="Rechercher"): span.glyphicon.glyphicon-search
+            li: a(href="/article/create",title="Nouvel article"): span.glyphicon.glyphicon-font
+
+    main
+      block main
