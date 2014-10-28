@@ -28,7 +28,11 @@ body,html{
 .rightbar,
 .leftbar {
 	background-color: #f6f9fa;
-	z-index: -1;
+	z-index: 0;
+}
+
+main {
+	z-index: 1;
 }
 
 .rightbar h3,
