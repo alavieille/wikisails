@@ -1,11 +1,24 @@
 extends ../main
 
 block content
-	div.col-md-3
+	div.col-md-3.leftbar.full-height
 		block leftbar
+			div.row(id="logo")
+				include ../logo
 
-	main.col-md-3
+			nav.row.left-menu
+				block left-menu
+					h3 Nav
+
+	main.col-md-6.border-shadow.full-height
 		block main
 
-	div.col-md-3
+	div.col-md-3.rightbar.full-height
 		block rightbar
+			div.row.search-bar
+				div.col-xs-12
+					form(action='/Article/search',method='post',role='form').form-horizontal
+						input(type="search", placeholder="Rechercher").form-control
+
+			div.row.rightbar-content
+				block rightbar-content

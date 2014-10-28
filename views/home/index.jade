@@ -6,6 +6,12 @@ block main
 			h1 WIKISAILS
 			h2
 				span.glyphicon.glyphicon-search
-			form.col-md-8.col-md-offset-2
-				input(type="search", placeholder="Rechercher",class="search-input").form-control
+				span.sr-only Rechercher
+				
+			form.col-md-8.col-md-offset-2.search-form
+				div.form-group
+					input(type="search", placeholder="Rechercher",class="search-input").form-control
+				
+				input.btn.btn-lg.btn-primary(type="submit", value="Rechercher")
+				a.btn.btn-lg.btn-default(href="#") Article au hasard
 

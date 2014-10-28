@@ -14,9 +14,14 @@ body .cover{
 
 .cover .inner-cover .search-input{
 	height: 40px;
-	margin-top: 30px;
+	margin-top: 15px;
+	margin-bottom: 25px;
 }
 
 .cover .inner-cover h2 span.glyphicon-search {
 	font-size: 2em;
+}
+
+.cover .inner-cover h2 {
+	margin-bottom: 0;
 }

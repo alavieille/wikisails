@@ -8,3 +8,46 @@ body,html{
 	width: 100%;
 	background-color: #f6f9fa;
 }
+
+.search-form .btn {
+	margin: auto 6px;
+}
+
+.border-shadow {
+	padding: 20px 45px;
+	border: solid 1px #edebeb;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+	box-shadow:         0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+.full-height {
+	min-height: 100%;
+}
+
+.rightbar,
+.leftbar {
+	background-color: #f6f9fa;
+	z-index: -1;
+}
+
+.rightbar h3,
+.leftbar h3 {
+	color: #acb0b1;
+	border-color: #e8e8e8;
+	border-top: solid 1px;
+	border-bottom: solid 1px;
+	font-size: 1em;
+	text-align: center;
+	padding: 10px;
+	margin: 0;
+}
+
+.leftbar #logo {
+	background-color: #fff;
+}
+
+.rightbar .search-bar {
+	padding: 20px 0;
+	background-color: #fff;
+}
