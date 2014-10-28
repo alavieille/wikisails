@@ -1,3 +1,8 @@
+@font-face{
+	font-family: "EB Garamond";
+	src: url(../fonts/EBGaramiond-Regular.ttf);
+}
+
 .logo{
 	background-color: #fff;
 	padding: 40px;
