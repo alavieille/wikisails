@@ -19,7 +19,7 @@ block content
                                 label(for='titre').control-label Titre
                                 input(type='text',name='Article[title]',value="#{ article ? article.title : '' }",id='titre').form-control
                             div.form-group
-                                label(for='contenue').control-label Contenue   
+                                label(for='contenue').control-label Contenu
                                 textarea(name='Article[content]', data-provide="markdown", rows='10', cols='30').form-control #{ article ? article.content : '' }
                             
                             div.form-group
