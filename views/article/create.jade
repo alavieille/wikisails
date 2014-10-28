@@ -18,10 +18,19 @@ block main
                     input(type='text',name='Article[title]',value="#{ article ? article.title : '' }",id='titre').form-control
                 div.form-group
                     label(for='contenue').control-label Contenu
-                    textarea(name='Article[content]', data-provide="markdown", rows='10', cols='30').form-control #{ article ? article.content : '' }
+                    textarea(name='Article[content]', id="markdown-editor", rows='10', cols='30').form-control #{ article ? article.content : '' }
                 
                 div.form-group
                     input(type='submit').btn.btn-primary
+                
+                div.modal#wiki-modal
+                    div.modal-dialog.modal-sm
+                        div.modal-content
+                            div.modal-header
+                                h5.modal-title Référence Wikipedia
+                            div.modal-body
+                                input(type="search",placeholder="Rechercher un article").form-control#searchRef
+                                div#res-wiki-article
 
 block rightbar-content
     h3 METADATA
