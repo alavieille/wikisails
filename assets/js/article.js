@@ -9,21 +9,6 @@ $(document).ready(function() {
 });
 
 
-// var getInformation = function(){
-// 	var uri = $(this).attr("href").replace("##refWiki##", "");
-// 	dbpedia.getInfoRessource(uri,showInformation,$(this));
-// 	console.log(uri);
-// 	$(this).popover({
-// 			placement:'right',
-// 			title:"Information",
-// 			trigger:'focus', 
-// 	        html : true, 
-// 	        content: "<p>Chargement en cours ... </p>",
-// 	});
-// 	$(this).focus();
-// 	return false;
-
-// }
 var getInformation = function(){
 	var uri = $(this).attr("href").replace("##refWiki##", "");
 	

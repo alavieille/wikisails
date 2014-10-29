@@ -30,3 +30,8 @@ article .article-content .popover .popover-thumbnail{
 	padding: 20px;
 }
 
+
+#wiki-modal #res-wiki-article .ref-wiki:hover{
+	cursor: pointer;
+	background-color: #ddd;
+}

@@ -1,5 +1,6 @@
 var dbpedia = new function(){
 	this.url = "http://dbpedia.org/sparql";
+	this.url = "http://fr.dbpedia.org/sparql";
 
 	this.searchRef = function(contentSearch,callback,paremeter){
 		var query = [
@@ -7,7 +8,7 @@ var dbpedia = new function(){
 			 "WHERE {",
 			        "?r rdfs:label ?label .",
 		            "FILTER (lang(?label) = 'fr').",
-		            "?label bif:contains '"+contentSearch+"' .", 
+		            "?label bif:contains '\""+contentSearch+"\"' .", 
 		            "?r dbpedia-owl:abstract ?abstract .",
 		            "FILTER (lang(?abstract) = 'fr').",
 			 "} LIMIT 10"
@@ -35,6 +36,7 @@ var dbpedia = new function(){
 	};
 
 	this.execQuery = function(query,callback,parameter){
+		console.log(query);
 		var queryUrl =  this.url+"?query="+ encodeURIComponent(query) +"&format=json";
 		$.ajax({
 	        dataType: "jsonp",  

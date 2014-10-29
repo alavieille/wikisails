@@ -25,6 +25,7 @@ $(document).ready(function() {
 var searhRef = function(evt){
   var content = $(this).val();
   if(content.length > 1){
+      $("#wiki-modal #res-wiki-article").html("<h5 class='text-center'>Recherche en cour ...</h5>");
       dbpedia.searchRef(content,extractRef);
   }
 }
@@ -53,6 +54,5 @@ var extractRef = function(result){
     var link = "["+label+"](##refWiki##"+uriRessource+")";
     $("#markdown-editor").data('markdown').replaceSelection(link);
     $("#wiki-modal").modal("hide");
-    // $("#markdown-editor").mardown().replaceSelection(label);
   });
 }
