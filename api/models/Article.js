@@ -15,6 +15,7 @@ module.exports = {
 
     abstract: {
       type : 'text',
+      required: true,
     },
     
   	content: {

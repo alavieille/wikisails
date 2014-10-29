@@ -35,6 +35,7 @@ module.exports = {
 		Article.findOne({id:req.param('id')}).exec(function(err,article){
 			console.log(article);
 			 if (err) return res.serverError(err);
+			 if (req.xhr) return res.json(article);
   			 if (!article) return res.notFound(article);
   			 return res.view({article:article});
   		});
@@ -67,6 +68,19 @@ module.exports = {
 			req.flash('info', 'Article supprimé')
   			res.redirect('/article/');
 		});
+	},
+
+
+	search : function(req,res){
+		if(req.param('query')==null)
+			return res.notFound("Paramêtre manquant");
+		else{
+			Article.find({title : {'contains' : req.param('query')} }).exec(function(err,articles){  
+			if (err) return res.serverError(err);
+			if (req.xhr) return res.json(articles);
+			else return res.view("article/list",{articles:articles});
+			});
+		}
 	}
 };
 

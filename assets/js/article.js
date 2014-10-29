@@ -5,22 +5,22 @@ $(document).ready(function() {
 	$("article .article-content").html(markdown.toHTML(content));
 
 
-	$("article .article-content a[href^='##refWiki##'").click(getInformation);
+	$("article .article-content a[href^='##refWiki##'").click(getInformationDbpedia);
+	$("article .article-content a[href^='##refInner##'").click(getInformationInner);
 });
 
-
-var getInformation = function(){
-	var uri = $(this).attr("href").replace("##refWiki##", "");
-	
+var getInformationInner = function(){
+	var uri = $(this).attr("href").replace("##refInner##", "");
 	console.log(uri);
+	
 	$(this).popoverasync({
 			placement:'right',
 			trigger:'focus', 
 	        html : true, 
-	        content: function (callback, showContent){
-	        	dbpedia.getInfoRessource(uri,function(result){
-					 content = extractContent(result);
-					 callback(showContent, content);
+	        content: function (callback, extensionRef){
+	        	$.getJSON( "/article/"+uri, function(result) {
+	        		 content = extractContentInner(result);
+	        		 callback(extensionRef, content);
 	        	});
 
 	        },
@@ -30,7 +30,49 @@ var getInformation = function(){
 
 }
 
-var extractContent = function(result){
+var getInformationDbpedia = function(){
+	var uri = $(this).attr("href").replace("##refWiki##", "");
+	
+
+	$(this).popoverasync({
+			placement:'right',
+			trigger:'focus', 
+	        html : true, 
+	        content: function (callback, extensionRef){
+	        	dbpedia.getInfoRessource(uri,function(result){
+					 content = extractContentDbpedia(result);
+					 callback(extensionRef, content);
+	        	});
+
+	        },
+	});
+	$(this).focus();
+	return false;
+
+}
+
+
+var extractContentInner = function(result){
+	if( typeof result != undefined ) {
+		var abstract = result.abstract;
+		var label = result.title;
+		var url = "/article/"+result.id;;
+		if(abstract.length > 600 )
+			abstract = abstract.substring(0, 600) + "...";
+		var content = "<div>";
+		content += "<h4>"+label+"</h4>";
+		content += "<p>";
+		content += abstract+"</p>";
+		if(url)
+			content += "<p>	<a href='"+url+"'>Liens vers l'article</a></p>";
+		content += "</div>";
+	}
+	else 
+		content = "<p class='text-center'> Aucun résultat </p>";
+	return content;
+}
+
+var extractContentDbpedia = function(result){
 	if( result.length > 0 ) {
 		var abstract = result[0].abstract.value;
 		var label = result[0].label.value;
@@ -40,6 +82,7 @@ var extractContent = function(result){
 		if(abstract.length > 600)
 			abstract = abstract.substring(0, 600) + "...";
 		var content = "<div>";
+		content += "<h4>"+label+"</h4>";
 		content += "<p>";
 		if(thumbnail)
 			content += "<img src='"+thumbnail+"' alt='"+label+"' class='popover-thumbnail' />";

@@ -36,7 +36,7 @@ var dbpedia = new function(){
 	};
 
 	this.execQuery = function(query,callback,parameter){
-		console.log(query);
+		// console.log(query);
 		var queryUrl =  this.url+"?query="+ encodeURIComponent(query) +"&format=json";
 		$.ajax({
 	        dataType: "jsonp",  

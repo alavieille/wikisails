@@ -49,6 +49,9 @@ module.exports.routes = {
 
   "/article/edit/:id" : 'ArticleController.edit',
 
+  "/article/search/:query" : 'ArticleController.search',
+
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
