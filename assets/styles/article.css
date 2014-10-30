@@ -14,6 +14,33 @@ article .article-content .popover .popover-thumbnail{
 	margin:10px;
 }
 
+/* barre relation */
+
+.list-relations{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.list-relations h5{
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+
+.list-relations ul{
+	padding-left: 0;
+	list-style: none;
+}
+
+.list-relations ul li{
+	padding: 5px 0;
+}
+
+.list-relations ul li a{
+	display: block;
+}
+
+/* creation article */
 .create-article {
 	position: relative;
 	z-index:1;
