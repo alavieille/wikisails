@@ -8,7 +8,7 @@ var dbpedia = new function(){
 			 "WHERE {",
 			        "?r rdfs:label ?label .",
 		            "FILTER (lang(?label) = 'fr').",
-		            "?label bif:contains '\""+contentSearch+"\"' .", 
+		            "?label bif:contains '\""+contentSearch+"\"' .",
 		            "?r dbpedia-owl:abstract ?abstract .",
 		            "FILTER (lang(?abstract) = 'fr').",
 			 "} LIMIT 10"
@@ -32,14 +32,27 @@ var dbpedia = new function(){
     			"}",
     		"} LIMIT 1",
  		].join(" ");
+
  		this.execQuery(query,callback,parameter);
 	};
+
+    this.getAllRessource = function(Uriressource, callback) {
+        var query = [
+            "SELECT * WHERE {",
+                "?dbpediaIri foaf:isPrimaryTopicOf <"+Uriressource+">.",
+                "?dbpediaIri ?r ?p.",
+                "FILTER (lang(?p) = 'fr' || lang(?p) = '' || isIRI(?p)).",
+            "}"
+        ].join(" ");
+
+        this.execQuery(query,callback);
+    };
 
 	this.execQuery = function(query,callback,parameter){
 		// console.log(query);
 		var queryUrl =  this.url+"?query="+ encodeURIComponent(query) +"&format=json";
 		$.ajax({
-	        dataType: "jsonp",  
+	        dataType: "jsonp",
 	        url: queryUrl,
 	        success: function( _data ) {
 	            var results = _data.results.bindings;
