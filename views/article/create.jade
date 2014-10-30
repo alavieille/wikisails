@@ -4,7 +4,7 @@ block localscript
 
 block main
     div.create-article
-        form(action='/Article/create',method='post',role='form').form-horizontal
+        form(action=req.path,method='post',role='form').form-horizontal
             fieldset
                 if (req.path == "/article/create")
                     legend Nouvel article
@@ -29,7 +29,7 @@ block main
                     label(for='contenue').control-label Contenu
                     textarea(name='Article[content]', id="markdown-editor", rows='10', cols='30').form-control #{ article ? article.content : '' }
                 div.form-group
-                    input(type='submit').btn.btn-primary
+                    input(type='submit',value="Sauvegarder").btn.btn-primary
 
 block append content
     div.modal#wiki-modal

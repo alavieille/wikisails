@@ -31,6 +31,10 @@ body,html{
 	z-index: 0;
 }
 
+.rightbar .navigation {
+	background-color: #fff;
+}
+
 main {
 	z-index: 1;
 }

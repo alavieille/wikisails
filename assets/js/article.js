@@ -5,8 +5,8 @@ $(document).ready(function() {
 	$("article .article-content").html(markdown.toHTML(content));
 
 
-	$("article .article-content a[href^='##refWiki##'").click(getInformationDbpedia);
-	$("article .article-content a[href^='##refInner##'").click(getInformationInner);
+	$('article .article-content a[href^="##refWiki##"]').click(getInformationDbpedia);
+	$('article .article-content a[href^="##refInner##"]').click(getInformationInner);
 });
 
 var getInformationInner = function(){
