@@ -28,7 +28,7 @@ block main
                     textarea(name='Article[content]', id="markdown-editor", rows='10', cols='30').form-control #{ article ? article.content : '' }
                 
                 div.form-group
-                    input(type='submit').btn.btn-primary
+                    input(type='submit',value="Sauvegarder").btn.btn-primary
                     
 block append content
     div.modal#wiki-modal
