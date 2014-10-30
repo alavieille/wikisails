@@ -14,13 +14,18 @@ article .article-content .popover .popover-thumbnail{
 	margin:10px;
 }
 
-
-.content .create-article{
-	margin-top: 20px;
-	padding: 20px;
+.create-article {
+	position: relative;
+	z-index:1;
+}
+.create-article #res-art-dbpedia{
+	position: absolute;
+	z-index: 3;
+	width: 100%;
 }
 
-#wiki-modal #res-ref-article .ref-wiki:hover{
+
+#wiki-modal #res-ref-article .ref-wiki:hover, #res-art-dbpedia .ref-wiki:hover{
 	cursor: pointer;
 	background-color: #ddd;
 }

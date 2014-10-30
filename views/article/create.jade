@@ -4,7 +4,7 @@ block localscript
 
 block main
     div.create-article
-        form(action=req.path,method='post',role='form').form-horizontal
+        form(action=req.path,method='post',role='form')
             fieldset
                 if (req.path == "/article/create")
                     legend Nouvel article
@@ -20,7 +20,7 @@ block main
                                         p #{errorAttributes.message}
                 div.form-group
                     label(for='titre').control-label Titre
-                    input(type='text',name='Article[title]',value="#{ article ? article.title : '' }",id='titre').form-control
+                    input(type='text',autocomplete="off" name='Article[title]',value="#{ article ? article.title : '' }",id='titre').form-control
                     div#res-art-dbpedia
                 div.form-group
                     label(for='contenue').control-label Abstract

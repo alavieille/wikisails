@@ -3,7 +3,7 @@ block localscript
         script(src="/js/article.js")
 
 block prepend nav
-    li: a(href="/article/delete/"+article.id,onclick="confirm('êtes-vous sur ?');"): span.glyphicon.glyphicon-remove
+    li: a(href="/article/delete/"+article.id,onclick="return confirm('êtes-vous sur ?');"): span.glyphicon.glyphicon-remove
     li: a(href="/article/edit/"+article.id,title="editer"): span.glyphicon.glyphicon-edit
 
 block left-menu
