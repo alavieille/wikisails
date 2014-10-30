@@ -42,13 +42,14 @@ module.exports = {
 	},
 
 	edit: function(req,res){
+		console.log("edit");
 		if(req.param('id')==null)
 			return res.notFound("Paramêtre manquant");
 		if(req.method=="POST" && req.param("Article",null)!=null){
 			Article.update({id:req.param('id')},req.param("Article")).exec(function(err,updated){
 		 		if(err)
-		      		return res.view("article/create",{errors:err,article:req.param("Article")});
-				return res.redirect("/article/"+created.id);
+		      		return res.view("article/edit/"+req.param('id'),{errors:err,article:req.param("Article")});
+				return res.redirect("/article/"+req.param('id'));
 		 	});
 		}
 		else {
