@@ -1,24 +1,31 @@
 extends ../main
 
 block content
-	div.col-md-3.leftbar.full-height
-		block leftbar
-			div.row(id="logo")
-				include ../logo
+    div.col-md-3.leftbar.full-height
+        block leftbar
+            div.row(id="logo")
+                include ../logo
 
-			nav.row.left-menu
-				block left-menu
-					h3 Nav
+            nav.row.left-menu
+                block left-menu
+                    h3 Nav
 
-	main.col-md-6.border-shadow.full-height
-		block main
+    main.col-md-6.border-shadow.full-height
+        block main
 
-	div.col-md-3.rightbar.full-height
-		block rightbar
-			div.row.search-bar
-				div.col-xs-12
-					form(action='/Article/search',method='post',role='form').form-horizontal
-						input(type="search", placeholder="Rechercher").form-control
+    div.col-md-3.rightbar.full-height
+        block rightbar
+            div.row.search-bar
+                div.col-xs-12
+                    form(action='/Article/search',method='post',role='form').form-horizontal
+                        input(type="search", placeholder="Rechercher").form-control
+            div.row
+                nav.navigation.col-xs-12
+                    ul.list-inline.pull-left
+                        block nav
+                            li: a(href="/article/create",title="Nouvel article"): span.glyphicon.glyphicon-font
+                            li: a(href="/article/",title="Liste des articles"): span.glyphicon.glyphicon-th-list
 
-			div.row.rightbar-content
-				block rightbar-content
+
+            div.row.rightbar-content
+                block rightbar-content
