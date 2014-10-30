@@ -39,9 +39,8 @@ var dbpedia = new function(){
     this.getAllRessource = function(Uriressource, callback) {
         var query = [
             "SELECT * WHERE {",
-                "?dbpediaIri foaf:isPrimaryTopicOf <"+Uriressource+">.",
-                "?dbpediaIri ?r ?p.",
-                "FILTER (lang(?p) = 'fr' || lang(?p) = '' || isIRI(?p)).",
+                "<"+Uriressource+"> ?p ?o.",
+                "FILTER (lang(?o) = 'fr' || lang(?o) = '' || isIRI(?o)).",
             "}"
         ].join(" ");
 
