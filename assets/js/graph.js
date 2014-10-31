@@ -8,9 +8,7 @@ $(document).ready(function() {
 	if(idArticle){
 		$.getJSON( "/article/reflink/"+idArticle, function(data) {
 			console.log(data);
-			var graphJson = createJsonGraph(data.link,data.article);
-			console.log(graphJson);
-			initGraph(graphJson);
+			initGraph(data);
 		})
 		.fail(function() {
     		console.log( "error" );
@@ -56,7 +54,8 @@ var initGraph = function(graph){
 
       var nodeInner = node.enter().append("g")
                     .attr("class", "node")
-                   .call(force.drag);
+                   .call(force.drag)
+                   .on('click',function(evt){console.log(evt)});
 
         nodeInner.append("circle")
                  .attr("r", function(d){if(d.ref=="interne")return 30; else return 5})
@@ -94,47 +93,3 @@ var initGraph = function(graph){
 
 }
 
-
-var createJsonGraph = function(linkRef,article){
-
-	var graph = "{ ";
-
-	var nodes = ' "nodes" : [ ';
-
-	var links = ' "links": [ ';
-
-	nodes += " { ";
-	nodes += ' "name" : "'+article.title+'" ,';
-	nodes += ' "ref" : "interne"';
-	nodes += ' },';  
-	$.each(linkRef,function(index,link){
-		console.log(index,link);
-		nodes += " { ";
-		nodes += ' "name" : "'+link.label+'" ,';
-		var ref = "interne";
-		if(link.uri.indexOf("##refWiki##") == 0)
-			ref = "wikipedia";
-		nodes += ' "ref" : "'+ref+'"';
-		nodes += ' },';
-
-
-		links += " { ";
-		links += ' "source" : 0 ,';
-		links += ' "target" : '+(index+1)+',';
-		var value = 20;
-		if(link.uri.indexOf("##refWiki##") == 0)
-			value = 5;
-		links += ' "value" : '+value;
-		links += ' },';
-	});
-
-	nodes += ']';
-	links += ']';
-
-	graph += nodes + ' ,'+links+' }';
-	graph = eval("(" + graph+ ")");
-	return graph
-
-
-
-}

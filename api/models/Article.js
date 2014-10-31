@@ -24,24 +24,69 @@ module.exports = {
   	},
 
     extractRefLink : function(){
+        console.log("extractRefLink");
         var re = /\[([^\]]+)\]\(([^)]+)\)/g; 
         var m;
-        var links = ' "links" : [ ';
+
+        var listLink = [];
         while ((m = re.exec(this.content)) != null) {
             if (m.index === re.lastIndex) {
                 re.lastIndex++;
             }
-            var link = '{ ';
-            link += ' "label" : "'+m[1]+ '" ,'; 
-            link += ' "uri" : "'+m[2]+ '"'; 
-            link +=' },';
-
-            links += link;
+            var link = {};
+            link["label"] = m[1];
+            link["uri"] = m[2];
+            listLink.push(link);
         }
-        links += ']';
-        var resjson = '{ '+links+' }';
-        return eval("(" + resjson+ ")");
+        return listLink;
     },
+
+
+     createJsonGraph : function(){
+
+          var linkRef = this.extractRefLink();
+          console.log(linkRef);
+          console.log(linkRef.length);
+          var graph = "{ ";
+
+          var nodes = ' "nodes" : [ ';
+
+          var links = ' "links": [ ';
+
+          nodes += " { ";
+          nodes += ' "name" : "'+this.title+'" ,';
+          nodes += ' "ref" : "interne"';
+          nodes += ' },';  
+
+          for (var i = 0; i < linkRef.length ; i++) {
+            console.log(linkRef[i]);
+            var link = linkRef[i];
+            nodes += " { ";
+            nodes += ' "name" : "'+link.label+'" ,';
+            var ref = "interne";
+            if(link.uri.indexOf("##refWiki##") == 0)
+              ref = "wikipedia";
+            nodes += ' "ref" : "'+ref+'"';
+            nodes += ' },';
+
+
+            links += " { ";
+            links += ' "source" : 0 ,';
+            links += ' "target" : '+(i+1)+',';
+            var value = 20;
+            if(link.uri.indexOf("##refWiki##") == 0)
+              value = 5;
+            links += ' "value" : '+value;
+            links += ' },';
+          }
+          nodes += ']';
+          links += ']';
+
+          graph += nodes + ' ,'+links+' }';
+          graph = eval("(" + graph+ ")");
+          return graph;
+
+     }
 
 
 
