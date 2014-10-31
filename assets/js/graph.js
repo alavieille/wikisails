@@ -8,7 +8,7 @@ $(document).ready(function() {
 	if(idArticle){
 		$.getJSON( "/article/reflink/"+idArticle, function(data) {
 			console.log(data);
-			var graphJson = createJsonGraph(data);
+			var graphJson = createJsonGraph(data.link,data.article);
 			console.log(graphJson);
 			initGraph(graphJson);
 		})
@@ -95,7 +95,7 @@ var initGraph = function(graph){
 }
 
 
-var createJsonGraph = function(linkRef){
+var createJsonGraph = function(linkRef,article){
 
 	var graph = "{ ";
 
@@ -104,7 +104,7 @@ var createJsonGraph = function(linkRef){
 	var links = ' "links": [ ';
 
 	nodes += " { ";
-	nodes += ' "name" : "Article Base" ,';
+	nodes += ' "name" : "'+article.title+'" ,';
 	nodes += ' "ref" : "interne"';
 	nodes += ' },';  
 	$.each(linkRef,function(index,link){

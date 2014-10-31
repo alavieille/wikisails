@@ -34,7 +34,7 @@ module.exports = {
 			return res.notFound("Paramêtre manquant");
 		Article.findOne({id:req.param('id')}).exec(function(err,article){
 			 if (err) return res.serverError(err);
-			 return res.json(article.extractRefLink().links);
+			 return res.json({link : article.extractRefLink().links, article :article});
   		});
 	},
 
