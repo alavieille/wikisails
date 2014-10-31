@@ -29,16 +29,36 @@ module.exports = {
  		});
 	},
 
+	getJsonRefLinkArticle : function(req,res){
+		if(req.param('id')==null)
+			return res.notFound("Paramêtre manquant");
+		Article.findOne({id:req.param('id')}).exec(function(err,article){
+			 if (err) return res.serverError(err);
+			 return res.json(article.extractRefLink().links);
+  		});
+	},
+
+
 	view : function(req,res){
 		if(req.param('id')==null)
 			return res.notFound("Paramêtre manquant");
 		Article.findOne({id:req.param('id')}).exec(function(err,article){
-			console.log(article);
 			 if (err) return res.serverError(err);
 			 if (req.xhr) return res.json(article);
   			 if (!article) return res.notFound(article);
   			 return res.view({article:article});
   		});
+	},
+
+	graph : function(req,res){
+		if(req.param('id')==null)
+			return res.notFound("Paramêtre manquant");
+		Article.findOne({id:req.param('id')}).exec(function(err,article){
+			 if (err) return res.serverError(err);
+  			 if (!article) return res.notFound(article);
+  			 return res.view({id:req.param('id')});
+  		});
+		
 	},
 
 	edit: function(req,res){
@@ -83,6 +103,7 @@ module.exports = {
 			});
 		}
 	}
+
 };
 
  

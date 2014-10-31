@@ -51,6 +51,10 @@ module.exports.routes = {
 
   "/article/search/:query" : 'ArticleController.search',
 
+  "/article/reflink/:id" : 'ArticleController.getJsonRefLinkArticle',
+
+  "/article/graph/:id" : 'ArticleController.graph',
+
 
   /***************************************************************************
   *                                                                          *

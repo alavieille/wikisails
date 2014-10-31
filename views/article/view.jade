@@ -5,6 +5,7 @@ block localscript
 block prepend nav
     li: a(href="/article/delete/"+article.id,onclick="return confirm('êtes-vous sur ?');"): span.glyphicon.glyphicon-remove
     li: a(href="/article/edit/"+article.id,title="editer"): span.glyphicon.glyphicon-edit
+    li: a(href="/article/graph/"+article.id,title="graph"): span.glyphicon.glyphicon-globe
 
 block left-menu
     h3 Relations

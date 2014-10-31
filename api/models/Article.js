@@ -23,6 +23,28 @@ module.exports = {
   		required: true,
   	},
 
+    extractRefLink : function(){
+        var re = /\[([^\]]+)\]\(([^)]+)\)/g; 
+        var m;
+        var links = ' "links" : [ ';
+        while ((m = re.exec(this.content)) != null) {
+            if (m.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+            var link = '{ ';
+            link += ' "label" : "'+m[1]+ '" ,'; 
+            link += ' "uri" : "'+m[2]+ '"'; 
+            link +=' },';
+
+            links += link;
+        }
+        links += ']';
+        var resjson = '{ '+links+' }';
+        return eval("(" + resjson+ ")");
+    },
+
+
+
   }
 };
 

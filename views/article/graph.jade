@@ -1,0 +1,8 @@
+extends ../layouts/three-column
+block localscript
+    script(src="http://d3js.org/d3.v3.min.js")
+    script(src="/js/graph.js")
+
+block main
+    input(type="hidden", value="#{id}")#id-article
+    div#graph
