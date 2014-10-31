@@ -17,6 +17,18 @@ $(document).ready(function() {
 
 });
 
+var generateGraph = function(id){
+	$("#graph").html("");
+	$.getJSON( "/article/reflink/"+id, function(data) {
+		console.log(data);
+		initGraph(data);
+	})
+	.fail(function() {
+		console.log( "error" );
+		})
+
+	console.log(id);
+}
 
 var initGraph = function(graph){
 	var width  = 800,
@@ -55,7 +67,7 @@ var initGraph = function(graph){
       var nodeInner = node.enter().append("g")
                     .attr("class", "node")
                    .call(force.drag)
-                   .on('click',function(evt){console.log(evt)});
+                   .on('click',function(node){if(node.id){generateGraph(node.id)}});
 
         nodeInner.append("circle")
                  .attr("r", function(d){if(d.ref=="interne")return 30; else return 5})

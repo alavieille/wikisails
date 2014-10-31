@@ -63,9 +63,15 @@ module.exports = {
             var link = linkRef[i];
             nodes += " { ";
             nodes += ' "name" : "'+link.label+'" ,';
-            var ref = "interne";
-            if(link.uri.indexOf("##refWiki##") == 0)
-              ref = "wikipedia";
+            var ref = "wikipedia";
+            if(link.uri.indexOf("##refInner##") == 0){
+
+              var id = link.uri.replace("##refInner##", "");
+              console.log(id);
+              nodes += ' "id" : "'+id+'" ,';
+              // nodes += ' "idArticle" : "'+id+'"';
+              ref = "interne";
+            }
             nodes += ' "ref" : "'+ref+'"';
             nodes += ' },';
 
