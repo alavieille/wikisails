@@ -23,9 +23,11 @@ var showPrevious = function()
 var generateGraph = function(id){
 	$("#linkPrevious").attr("href",$("#id-article").val());
 	$("#id-article").val(id);
+
 	if($("#linkPrevious").attr("href") != $("#id-article").val())
 		$("#linkPrevious").show();
 	$("#graph").html("");
+
 	$.getJSON( "/article/reflink/"+id, function(data) {
 		console.log(data);
 		initGraph(data);
@@ -38,77 +40,111 @@ var generateGraph = function(id){
 }
 
 var initGraph = function(graph){
-	var width  = 800,
-	    height = 400;
 
-	var color = d3.scale.category20();
+  var width  = $("#graph").width();
+	var height = $("#graph").height();
 
 	var force = d3.layout.force()
-	    .charge(-1000)
-	    .size([width, height]);
+	              .charge(nodeCharge)
+                .friction(0.5)
+	              .size([width, height]);
 
 	var svg = d3.select("#graph").append("svg")
-	    .attr("width", width)
-	    .attr("height", height);
+	             .attr("width", width)
+	            .attr("height", height);
 
 	svg.selectAll("g").remove();
-    svg.selectAll("line.link").remove();
+  svg.selectAll("line.link").remove();
 
 
-      force
-          .nodes(graph.nodes)
-          .links(graph.links)
-          .linkDistance(function(d){return d.value * 10})
-          .start();
+  force.nodes(graph.nodes)
+       .links(graph.links)
+       .linkDistance(function(d){return d.value * 20})
+       .start();
 
-      var link = svg.selectAll("line.link")
-          .data(graph.links)
-          .enter().append("line")
-          .attr("class", "link")
-          .attr("stroke","black")
-          .style("stroke-width", 2);
+  var link = svg.selectAll("line.link")
+                .data(graph.links)
+                .enter().append("line")
+                .attr("class", "link")
+                .attr("stroke","black")
+                .style("stroke-width", 2);
 
-      var node = svg.selectAll("g")
+
+  var node = svg.selectAll("g")
                 .data(graph.nodes);
 
-      var nodeInner = node.enter().append("g")
-                    .attr("class", "node")
-                   .call(force.drag)
-                   .on('click',function(node){if(node.id){generateGraph(node.id)}});
+  var nodeInner = node.enter().append("g")
+                              .call(force.drag)
+                              .on('click',function(node){if(node.id){generateGraph(node.id)}});
 
-        nodeInner.append("circle")
-                 .attr("r", function(d){if(d.ref=="interne")return 30; else return 5})
-                .style("fill", function(d) {  switch (d.ref){
-                                          case "interne":
-                                            return "red"
-                                            break;
-                                          case "wikpedia":
-                                            return "green"
-                                            break;        
-                                          }})
+  nodeInner.append("circle")
+           .attr("r", nodeSize)
+           .style("fill", nodeColor)
 
-        var text = nodeInner.append("text")
-            .attr("text-anchor", "middle")
-            .attr("font-family", "sans-serif")
-            .attr("stroke", "black")
-            .attr("stroke-width","0px")
-            .attr("dy", function(d){if(d.ref=="interne")return "3em"; else return "-1.35em"})
-            .text(function(d) { return d.name; });
+  var text = nodeInner.append("text")
+      .attr("text-anchor", "middle")
+      .attr("font-family", "sans-serif")
+      .attr("stroke", "black")
+      .attr("stroke-width","0px")
+      .attr("dy", dxText)
+      .text(function(d) { return d.name; });
 
-      node.append("title")
-          .text(function(d) { return d.name; });
 
-      force.on("tick", function() {
+  force.on("tick", function() {
 
       link.attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
      
-     node.attr("transform", function(d) { return "translate(" + d.x + ","
-    + d.y + ")"; });
+      node.attr("transform", function(d) { return "translate(" + d.x + ","+ d.y + ")"; });
 
-      });
+  });
 
+}
+
+
+
+var nodeCharge = function(node){
+  if(node.ref == "wikipedia")
+    return -1000;
+  else
+    return -500;
+}
+
+// position du texte du noeud selon leurs type (article de base, reférence interne, ref wikipedia)
+var dxText = function(node){
+  switch (node.ref){
+    case "interne":
+      return "3em";
+    case "base":
+      return "4em";
+    case "wikipedia":
+      return "-1em";
+  }
+}
+
+// taille des noeuds selon leurs type (article de base, reférence interne, ref wikipedia)
+var nodeSize = function(node){
+  switch (node.ref){
+    case "interne":
+      return 20;
+    case "base":
+      return 40;
+    case "wikipedia":
+      return 3;
+  }
+}
+
+// couleur des noeuds selon leurs type (article de base, reférence interne, ref wikipedia)
+var nodeColor =  function(node) { 
+  switch (node.ref){
+    case "interne":
+      return "#bbb";
+    case "base":
+      return "#444";
+    case "wikipedia":
+      return "black";
+  }
 }
 
