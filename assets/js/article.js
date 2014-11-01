@@ -11,6 +11,7 @@ $(document).ready(function() {
 });
 
 
+// Créer les liens des relations de la barre de gauche
 var createLinkSideBarRelation = function(){
 
 	var linksRefInner = $('article .article-content a[href^="##refInner##"]');
@@ -29,6 +30,7 @@ var createLinkSideBarRelation = function(){
 }
 
 
+// créer le code HTML d'une liste de référence
 var createListRefHtml = function(listLink){
 	
 	res = "<ul>";
@@ -47,9 +49,9 @@ var createListRefHtml = function(listLink){
 	return res;
 }
 
+// extrait les informations d'une référence interne et l'affiche dans un popover
 var getInformationInner = function(){
 	var uri = $(this).attr("href").replace("##refInner##", "");
-	console.log(uri);
 	
 	$(this).popoverasync({
 			placement:'right',
@@ -58,7 +60,7 @@ var getInformationInner = function(){
 	        content: function (callback, extensionRef){
 	        	$.getJSON( "/article/"+uri, function(result) {
 	        		 content = extractContentInner(result);
-	        		 callback(extensionRef, content);
+	        		 callback(extensionRef, content); // cette ligne génére une erreur dans la console 
 	        	});
 
 	        },
@@ -68,6 +70,7 @@ var getInformationInner = function(){
 
 }
 
+// extrait les informations d'une référence wikipedia et l'affiche dans un popover
 var getInformationDbpedia = function(){
 	var uri = $(this).attr("href").replace("##refWiki##", "");
 	
@@ -79,7 +82,7 @@ var getInformationDbpedia = function(){
 	        content: function (callback, extensionRef){
 	        	dbpedia.getInfoRessource(uri,function(result){
 					 content = extractContentDbpedia(result);
-					 callback(extensionRef, content);
+					 callback(extensionRef, content); // cette ligne génére une erreur dans la console 
 	        	});
 
 	        },

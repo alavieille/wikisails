@@ -12,7 +12,6 @@ module.exports = {
 		     Article.create(req.param("Article")).exec(function(err,created){
 		     	if(err)
 		     		return res.view({errors:err,article:req.param("Article")});
-		     	console.log(created);
   			    return res.redirect("/article/"+created.id);
   			});
 
@@ -24,7 +23,6 @@ module.exports = {
 
 	list : function(req,res){
 		Article.find({}).exec(function(err,articles){
-			console.log(articles);
 			res.view({articles:articles});
  		});
 	},
@@ -62,7 +60,6 @@ module.exports = {
 	},
 
 	edit: function(req,res){
-		console.log("edit");
 		if(req.param('id')==null)
 			return res.notFound("Paramêtre manquant");
 		if(req.method=="POST" && req.param("Article",null)!=null){

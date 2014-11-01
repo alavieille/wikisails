@@ -1,4 +1,4 @@
 $(document).ready(function() {
-		console.log("// Wiki sails");
+	console.log("// Wiki sails");
 });
 

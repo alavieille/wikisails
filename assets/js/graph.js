@@ -1,23 +1,30 @@
 $(document).ready(function() {
 	var idArticle = $("#id-article").val();
-
-
+	$("#linkPrevious").hide();
+	$("#linkPrevious").click(showPrevious);
 
 
 	console.log(idArticle);
 	if(idArticle){
-		$.getJSON( "/article/reflink/"+idArticle, function(data) {
-			console.log(data);
-			initGraph(data);
-		})
-		.fail(function() {
-    		console.log( "error" );
-  		})
+		generateGraph(idArticle);
 	}
 
 });
 
+var showPrevious = function()
+{
+	idArticle = $(this).attr("href");
+	generateGraph(id);
+	return false;
+}
+
+
+
 var generateGraph = function(id){
+	$("#linkPrevious").attr("href",$("#id-article").val());
+	$("#id-article").val(id);
+	if($("#linkPrevious").attr("href") != $("#id-article").val())
+		$("#linkPrevious").show();
 	$("#graph").html("");
 	$.getJSON( "/article/reflink/"+id, function(data) {
 		console.log(data);
