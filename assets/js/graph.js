@@ -1,42 +1,46 @@
 $(document).ready(function() {
 	var idArticle = $("#id-article").val();
-	$("#linkPrevious").hide();
-	$("#linkPrevious").click(showPrevious);
-
-
-	console.log(idArticle);
 	if(idArticle){
-		generateGraph(idArticle);
-	}
+    generateGraph(idArticle);
+    history.pushState({id: idArticle});
+  }
+
+  window.onpopstate = function(event) {
+    console.log(event);
+    var state = event.state;
+    if(state != null)
+      generateGraph(state.id);
+    else
+      history.back();
+
+  };
+
 
 });
 
-var showPrevious = function()
-{
-	idArticle = $(this).attr("href");
-	generateGraph(id);
-	return false;
+var clickNode = function(node){
+  if(node.id){
+    history.pushState({id: node.id});
+    generateGraph(node.id)
+  }
 }
 
 
-
 var generateGraph = function(id){
-	$("#linkPrevious").attr("href",$("#id-article").val());
-	$("#id-article").val(id);
 
-	if($("#linkPrevious").attr("href") != $("#id-article").val())
-		$("#linkPrevious").show();
+  // $("#linkPrevious").attr("href",$("#id-article").val());
+  // console.log(history.pushState({id: id},"graph : "+id, "#"+id));
+	// $("#id-article").val(id);
+
 	$("#graph").html("");
 
 	$.getJSON( "/article/reflink/"+id, function(data) {
-		console.log(data);
 		initGraph(data);
 	})
 	.fail(function() {
 		console.log( "error" );
 		})
 
-	console.log(id);
 }
 
 var initGraph = function(graph){
@@ -75,7 +79,7 @@ var initGraph = function(graph){
 
   var nodeInner = node.enter().append("g")
                               .call(force.drag)
-                              .on('click',function(node){if(node.id){generateGraph(node.id)}});
+                              .on('click',clickNode);
 
   nodeInner.append("circle")
            .attr("r", nodeSize)
