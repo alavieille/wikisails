@@ -77,12 +77,15 @@ var initGraph = function(graph){
   var node = svg.selectAll("g")
                 .data(graph.nodes);
 
+
   var nodeInner = node.enter().append("g")
                               .call(force.drag)
+                              .style('cursor', function(d){if(d.ref=="base") return 'move'; else return 'pointer'})
                               .on('click',clickNode);
 
   nodeInner.append("circle")
            .attr("r", nodeSize)
+           .attr("class", function(d){if(d.ref!="base") return "node-circle"})
            .style("fill", nodeColor)
 
   var text = nodeInner.append("text")
