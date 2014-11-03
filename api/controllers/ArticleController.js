@@ -12,7 +12,6 @@ module.exports = {
 		     Article.create(req.param("Article")).exec(function(err,created){
 		     	if(err)
 		     		return res.view({errors:err,article:req.param("Article")});
-		     	console.log(created);
   			    return res.redirect("/article/"+created.id);
   			});
 
@@ -24,14 +23,13 @@ module.exports = {
 
 	list : function(req,res){
 		Article.find({}).exec(function(err,articles){
-			console.log(articles);
 			res.view({articles:articles});
  		});
 	},
 
 	getJsonRefLinkArticle : function(req,res){
 		if(req.param('id')==null)
-			return res.notFound("Paramêtre manquant");
+			return res.notFound("Paramètre manquant");
 		Article.findOne({id:req.param('id')}).exec(function(err,article){
 			 if (err) return res.serverError(err);
 			 return res.json(article.createJsonGraph());
@@ -41,7 +39,7 @@ module.exports = {
 
 	view : function(req,res){
 		if(req.param('id')==null)
-			return res.notFound("Paramêtre manquant");
+			return res.notFound("Paramètre manquant");
 		Article.findOne({id:req.param('id')}).exec(function(err,article){
 			 if (err) return res.serverError(err);
 			 if (req.xhr) return res.json(article);
@@ -52,7 +50,7 @@ module.exports = {
 
 	graph : function(req,res){
 		if(req.param('id')==null)
-			return res.notFound("Paramêtre manquant");
+			return res.notFound("Paramètre manquant");
 		Article.findOne({id:req.param('id')}).exec(function(err,article){
 			 if (err) return res.serverError(err);
   			 if (!article) return res.notFound(article);
@@ -62,9 +60,8 @@ module.exports = {
 	},
 
 	edit: function(req,res){
-		console.log("edit");
 		if(req.param('id')==null)
-			return res.notFound("Paramêtre manquant");
+			return res.notFound("Paramètre manquant");
 		if(req.method=="POST" && req.param("Article",null)!=null){
 			Article.update({id:req.param('id')},req.param("Article")).exec(function(err,updated){
 		 		if(err)
@@ -84,7 +81,7 @@ module.exports = {
 
 	delete : function(req,res){
 		if(req.param('id')==null)
-			return res.notFound("Paramêtre manquant");
+			return res.notFound("Paramètre manquant");
 		Article.destroy({id:req.param('id')}).exec(function(err){  
 			req.flash('info', 'Article supprimé')
   			res.redirect('/article/');
@@ -93,8 +90,9 @@ module.exports = {
 
 
 	search : function(req,res){
+		console.log("test");
 		if(req.param('query')==null)
-			return res.notFound("Paramêtre manquant");
+			return res.notFound("Paramètre manquant");
 		else{
 			Article.find({title : {'contains' : req.param('query')} }).exec(function(err,articles){  
 			if (err) return res.serverError(err);

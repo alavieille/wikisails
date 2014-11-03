@@ -1,5 +1,9 @@
+// configuration de l'éditeur de markdown pour la création et édition d'un article
+
 $(document).ready(function() {
   $("#markdown-editor").markdown({
+
+    //créer un bouton pour gérer les références d'un article
     additionalButtons: [
       [{
         name: "groupCustom",
@@ -10,27 +14,32 @@ $(document).ready(function() {
           icon: "glyphicon glyphicon-book",
           callback: function(e){
             $("#wiki-modal").modal("show");
-            $("#wiki-modal #searchRef").on('change keyup paste', searhRef);
+            // recherche des référence a wikipedia
+            $("#searchRef").on('keyup paste', searhRef);
+           
           }
         }]
       }]
     ]
   });
 
-  $('input#titre').on('change keyup paste', function(){
+
+  // Recherche des articles wikipedia ayant le même titre
+  $('input#titre').on('keyup paste', function(){
     var content = $(this).val();
     if (content.length > 1) {
       $('#res-art-dbpedia').html("<h5 class='text-center'>Recherche en cours ...</h5>");
-
       dbpedia.searchRef(content, extractArtDbpedia);
     }
   });
 });
 
+
+// Recherche les références wikipedia
 var searhRef = function(evt){
   var content = $(this).val();
   if(content.length > 1){
-    $("#wiki-modal #res-ref-article #res-dbpedia").html("<h5 class='text-center'>Recherche en cours ...</h5>");
+    $("#res-ref-article #res-dbpedia").html("<h5 class='text-center'>Recherche en cours ...</h5>");
     dbpedia.searchRef(content, extractRefDbpedia);
     searchRefWikiSails(content);
   }
@@ -57,6 +66,7 @@ var searchRefWikiSails = function(content){
 
 // Extrait les resultats de dbpedia pour les références internes
 var extractRefDbpedia = function(result){
+  console.log("res")
   var resHtml = "";
   if(result.length == 0)
     resHtml += "<h5 class='text-center'>Aucun résultat</h5>";
@@ -69,8 +79,13 @@ var extractRefDbpedia = function(result){
     });
     resHtml += "</ul>";
   }
+ 
+
   $("#wiki-modal #res-ref-article #res-dbpedia").html(resHtml);
-  $("#wiki-modal #res-ref-article #res-dbpedia .ref-wiki").click(clickCreateRef);
+  // $(document).on('click', "#wiki-modal #res-ref-article .ref-wiki", clickCreateRef);
+   $("#res-ref-article #res-dbpedia .ref-wiki").click(clickCreateRef);
+  // $("#res-ref-article #res-dbpedia .tt").click(clickCreateRef);
+
 }
 
 // Clique sur un élement de la liste pour créer une reférence

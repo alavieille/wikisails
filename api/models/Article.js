@@ -55,7 +55,7 @@ module.exports = {
 
           nodes += " { ";
           nodes += ' "name" : "'+this.title+'" ,';
-          nodes += ' "ref" : "interne"';
+          nodes += ' "ref" : "base"';
           nodes += ' },';  
 
           for (var i = 0; i < linkRef.length ; i++) {
@@ -79,7 +79,7 @@ module.exports = {
             links += " { ";
             links += ' "source" : 0 ,';
             links += ' "target" : '+(i+1)+',';
-            var value = 20;
+            var value = 15;
             if(link.uri.indexOf("##refWiki##") == 0)
               value = 5;
             links += ' "value" : '+value;

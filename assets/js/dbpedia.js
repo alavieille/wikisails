@@ -2,6 +2,7 @@ var dbpedia = new function(){
 	this.url = "http://dbpedia.org/sparql";
 	this.url = "http://fr.dbpedia.org/sparql";
 
+	// Recherche les référence wikipedia correspondant au contenue de la recherche (contentSearch)
 	this.searchRef = function(contentSearch,callback,paremeter){
 		var query = [
 			 "SELECT DISTINCT ?r ?label ?abstract",
@@ -17,6 +18,7 @@ var dbpedia = new function(){
 		this.execQuery(query,callback);
 	};
 
+	// Récupére l'abstract, l'image et lien vers wiki du ressources selon sont uri du type (< http//:dbpedia.org/ressource/nom_de_la_ressource>)
 	this.getInfoRessource = function(Uriressource,callback,parameter){
 		var query = [
 			"SELECT ?label ?abstract ?thumbnail ?wikipage",
@@ -36,6 +38,8 @@ var dbpedia = new function(){
  		this.execQuery(query,callback,parameter);
 	};
 
+
+	// Récoupére toutes les informations d'une ressource
     this.getAllRessource = function(Uriressource, callback) {
         var query = [
             "SELECT * WHERE {",
@@ -47,6 +51,11 @@ var dbpedia = new function(){
         this.execQuery(query,callback);
     };
 
+
+    // execute une requête en sparql 
+    // $query requête sparql
+    // callback function appeler une fois la requête terminé
+    // parameter parametre a transmettre à la fonction de callback
 	this.execQuery = function(query,callback,parameter){
 		// console.log(query);
 		var queryUrl =  this.url+"?query="+ encodeURIComponent(query) +"&format=json";

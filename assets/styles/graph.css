@@ -1,0 +1,11 @@
+#graph {
+	background: white;
+	border:1px solid grey;
+	min-height:600px; 
+	margin-top: 15px;
+}
+
+
+#graph .node-circle:hover{
+	opacity: 0.8;
+}
