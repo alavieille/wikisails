@@ -1,6 +1,7 @@
 extends ../layouts/three-column
 block localscript
     script(src="/js/namespaces.js")
+    script(src="/js/json.min.js")
     script(src="/js/markdown-config.js")
 
 block main
@@ -21,7 +22,8 @@ block main
                                         p #{errorAttributes.message}
                 div.form-group
                     label(for='titre').control-label Titre
-                    input(type='text',autocomplete="off" name='Article[title]',value="#{ article ? article.title : '' }",id='titre').form-control
+                    input(type='text', name='Article[title]', value="#{ article ? article.title : '' }", id='titre').form-control
+                    input(type='hidden', name="Article[metadatas]", value="#{ article ? JSON.stringify(article.metadatas) : '' }", id='mdForm')
                     div#res-art-dbpedia
                 div.form-group
                     label(for='contenue').control-label Abstract
@@ -47,6 +49,65 @@ block append content
                         h4.text-center Articles Wikipedia
                         div#res-dbpedia
                             p.text-center Aucun résultat
+    div.modal#ns-modal
+        div.modal-dialog.modal-sm
+            div.modal-content
+                div.modal-header
+                    h5.modal-title Nouvel espace de nom
+                div.modal-body
+                    input(type="text",placeholder="Nom de l'espace").form-control#nsName
+                div.modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Fermer
+                    button.btn.btn-primary#ajoutNs(type="button") Ajouter
+    div.modal#nsAttr-modal
+        div.modal-dialog.modal-sm
+            div.modal-content
+                div.modal-header
+                    h5.modal-title Nouvel attribut pour le namespace&nbsp;
+                        span.ns-name
+                div.modal-body
+                    div.form-group
+                        input(type="text",placeholder="Nom de l'attribut").form-control#attrName
+                    div.form-group
+                        input(type="text",placeholder="Valeur").form-control#attrValue
+                div.modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Fermer
+                    button.btn.btn-primary#ajoutAttr(type="button") Ajouter
+
 
 block rightbar-content
     h3 METADATA
+    if article && article.metadatas
+        div.panel-group#accordion(role="tablist", aria-multiselectable="true")
+            each attr, ns in article.metadatas
+                div.panel.panel-default
+                    div.panel-heading(role="tab", id="#{ns}")
+                        h4.panel-title
+                            a(data-toggle="collapse", data-parent="#accordion", href="#collapse#{ns}" aria-expanded="true" aria-controls="collapse#{ns}")
+                                span.caret
+                                |  #{ns}
+                    div.panel-collapse.collapse(role="tabpanel", id="collapse#{ns}", aria-labelledby="#{ns}")
+                        div.panel-body
+                            dl
+                                each values, at in attr
+                                    if values[0].uri
+                                        dt
+                                            a(href="#{values[0].uri}") #{ns}:#{at}
+                                    else
+                                        dt #{ns}:#{at}
+                                    each val in values
+                                        if val.value.value
+                                            if val.value.uri
+                                                dd
+                                                    a(href="#{val.value.uri}") #{val.value.value}
+                                            else
+                                                dd #{val.value.value}
+                                        else
+                                            dd
+                                                a(href="#{val.value.uri}") #{val.value.ns}:#{val.value.property}
+                            a.btn.btn-primary.attrModal(data-ns="#{ns}")
+                                i.glyphicon.glyphicon-plus
+                                |   Ajouter un attribut
+    a.btn.btn-default.btn-block#nsModal
+        i.glyphicon.glyphicon-plus
+        |   Ajouter un espace de noms

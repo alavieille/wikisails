@@ -8,24 +8,28 @@
 module.exports = {
 
   attributes: {
-  	title: {
-  		type: 'string',
-  		required: true,
-  	},
+    title: {
+        type: 'string',
+        required: true,
+    },
 
     abstract: {
       type : 'text',
       required: true,
     },
-    
-  	content: {
-  		type: 'text',
-  		required: true,
-  	},
+
+    content: {
+        type: 'text',
+        required: true,
+    },
+
+    metadatas: {
+        type: 'json'
+    },
 
     extractRefLink : function(){
         console.log("extractRefLink");
-        var re = /\[([^\]]+)\]\(([^)]+)\)/g; 
+        var re = /\[([^\]]+)\]\(([^)]+)\)/g;
         var m;
 
         var listLink = [];
@@ -56,7 +60,7 @@ module.exports = {
           nodes += " { ";
           nodes += ' "name" : "'+this.title+'" ,';
           nodes += ' "ref" : "base"';
-          nodes += ' },';  
+          nodes += ' },';
 
           for (var i = 0; i < linkRef.length ; i++) {
             console.log(linkRef[i]);

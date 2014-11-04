@@ -10,13 +10,37 @@ block prepend nav
 block left-menu
     h3 Relations
     div.list-relations
-     
+
 block main
     article.article
         h2 #{article.title}
-        div.article-content
-            !{article.content}
+        div.article-content !{article.content}
 
 block rightbar-content
     aside
         h3 METADATA
+        if article && article.metadatas
+            div.panel-group#accordion(role="tablist", aria-multiselectable="true")
+                each attr, ns in article.metadatas
+                    div.panel.panel-default
+                        div.panel-heading(role="tab", id="#{ns}")
+                            h4.panel-title
+                                a(data-toggle="collapse", data-parent="#accordion", href="#collapse#{ns}" aria-expanded="true" aria-controls="collapse#{ns}")
+                                    span.caret
+                                    |  #{ns}
+                        div.panel-collapse.collapse(role="tabpanel", id="collapse#{ns}", aria-labelledby="#{ns}")
+                            div.panel-body
+                                dl
+                                    each values, at in attr
+                                        dt
+                                            a(href="#{values[0].uri}") #{ns}:#{at}
+                                        each val in values
+                                            if val.value.value
+                                                if val.value.uri
+                                                    dd
+                                                        a(href="#{val.value.uri}") #{val.value.value}
+                                                else
+                                                    dd #{val.value.value}
+                                            else
+                                                dd
+                                                    a(href="#{val.value.uri}") #{val.value.ns}:#{val.value.property}

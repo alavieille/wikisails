@@ -1,8 +1,13 @@
-// configuration de l'éditeur de markdown pour la création et édition d'un article
+// Variable représentant toutes les metadatas d'un article
+var md = {};
 
+
+// Configuration de l'éditeur de markdown pour la création et édition d'un article
 $(document).ready(function() {
-  $("#markdown-editor").markdown({
+  // Initialisation des metadatas
+  md = JSON.parse($('#mdForm').val());
 
+  $("#markdown-editor").markdown({
     //créer un bouton pour gérer les références d'un article
     additionalButtons: [
       [{
@@ -16,13 +21,11 @@ $(document).ready(function() {
             $("#wiki-modal").modal("show");
             // recherche des référence a wikipedia
             $("#searchRef").on('keyup paste', searhRef);
-           
           }
         }]
       }]
     ]
   });
-
 
   // Recherche des articles wikipedia ayant le même titre
   $('input#titre').on('keyup paste', function(){
@@ -30,6 +33,91 @@ $(document).ready(function() {
     if (content.length > 1) {
       $('#res-art-dbpedia').html("<h5 class='text-center'>Recherche en cours ...</h5>");
       dbpedia.searchRef(content, extractArtDbpedia);
+    }
+  });
+
+  // Fenètre modal d'ajout de namespaces
+  $(document).on('click', '#nsModal', function(){
+    $('#ns-modal').modal("show");
+  });
+
+  // Validation et ajout du namespace
+  $('#ajoutNs').on('click', function(){
+    if ($('#nsName').val().length) {
+      var ns = $('#nsName').val();
+      $('#nsName').val("");
+
+      addPanel(ns);
+      md[ns] = {};
+      updateForm();
+
+      $('#ns-modal').modal("hide");
+    } else {
+      $('#nsName').addClass("has-error")
+        .after(
+          $('<p class="text-danger">Veuillez donner un nom au namespace.</p>')
+        );
+    }
+  });
+
+  // Validation du champ
+  $('#nsName').on('keyup paste', function(){
+    if ($(this).val().length) {
+      $(this).removeClass('has-error')
+        .next().remove();
+    } else if (!$('#nsName + .text-danger').length) {
+      $(this).addClass('has-error')
+        .after(
+          $('<p class="text-danger">Veuillez donner un nom au namespace.</p>')
+        );
+    }
+  });
+
+  // Fenètre modal d'ajout d'un attribut dans un namespace
+  $('.attrModal').on('click', function(){
+    $('.ns-name').text($(this).data('ns'));
+
+    $('#nsAttr-modal').modal('show');
+  });
+
+  // Validation et ajout de l'attribut
+  $('#ajoutAttr').on('click', function(){
+    if ($('#attrName').val().length && $('#attrValue').val().length) {
+      var ns = $('.ns-name').text(),
+          attr = $('#attrName').val(),
+          value = $('#attrValue').val();
+      $('#attrName, #attrValue').val("");
+
+      if (!md[ns][attr]) {
+        md[ns][attr] = [];
+      }
+
+      // Ajout dans le modèle
+      md[ns][attr].push({
+        ns: "" + ns,
+        uri: "",
+        property: "" + attr,
+        value: {
+          ns: "",
+          uri: "",
+          property: "",
+          value: "" + value
+        }
+      });
+      updateForm();
+
+      // Affichage des modifications
+      updatePanel(ns);
+
+      $('#nsAttr-modal').modal("hide");
+    } else {
+      if ($('#attrName').val().length) {
+
+      }
+
+      if ($('#attrValue').val().length) {
+
+      }
     }
   });
 });
@@ -66,7 +154,6 @@ var searchRefWikiSails = function(content){
 
 // Extrait les resultats de dbpedia pour les références internes
 var extractRefDbpedia = function(result){
-  console.log("res")
   var resHtml = "";
   if(result.length == 0)
     resHtml += "<h5 class='text-center'>Aucun résultat</h5>";
@@ -79,7 +166,7 @@ var extractRefDbpedia = function(result){
     });
     resHtml += "</ul>";
   }
- 
+
 
   $("#wiki-modal #res-ref-article #res-dbpedia").html(resHtml);
   // $(document).on('click', "#wiki-modal #res-ref-article .ref-wiki", clickCreateRef);
@@ -115,7 +202,7 @@ var extractArtDbpedia = function(result){
     resHtml += "</ul>";
   }
   $("#res-art-dbpedia").html(resHtml);
-  $(document).on('click', "#res-art-dbpedia .ref-wiki", clickLoadArticle);
+  $("#res-art-dbpedia .ref-wiki").on('click', clickLoadArticle);
 }
 
 // Clique sur un élement de la liste pour charger l'article
@@ -129,7 +216,6 @@ var clickLoadArticle = function(evt){
 
   dbpedia.getAllRessource($(this).data('uri'), function(result){
     // Construction du modèle
-    var md = {};
     for (i in result) {
       var triple = result[i],
         pFound = false,
@@ -195,22 +281,18 @@ var clickLoadArticle = function(evt){
       md[dataStruct.ns][dataStruct.property].push(dataStruct);
     }
 
+    // Insertion dans le formulaire
+    updateForm();
+
     // Génération de la vue
     var accordion = $('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" />');
-    for (ns in md) {
-      var panel =  $('<div class="panel panel-default" />');
-      panel.append(
-        '<div class="panel-heading" role="tab" id="' + ns + '">' +
-          '<h4 class="panel-title">' +
-            '<a data-toggle="collapse" data-parent="#accordion" href="#collapse' + ns + '" aria-expanded="true" aria-controls="collapse' + ns + '">' +
-              ns +
-            '</a>' +
-          '</h4>' +
-        '</div>'
-      );
+    $(".rightbar-content").empty().append('<h3>METADATA</h3>')
+      .append(accordion)
+      .append('<a id="nsModal" class="btn btn-default btn-block"><i class="glyphicon glyphicon-plus"></i> Ajouter un espace de noms</a>');
 
-      var body = $('<div class="panel-body"></div>');
-      var list = $('<dl />');
+    for (ns in md) {
+      var body = addPanel(ns),
+          list = $('<dl />');
       for (type in md[ns]) {
         list.append(
           '<dt>' +
@@ -236,14 +318,72 @@ var clickLoadArticle = function(evt){
       }
 
       body.append(list);
-      panel.append(
-        $('<div id="collapse' + ns + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="' + ns + '" />').append(body)
+      body.append(
+        $('<a href="#" class="btn btn-primary attrModal"><i class="glyphicon glyphicon-plus"></i> Ajouter un attribut</a>')
       );
-      accordion.append(panel);
     }
-    $(".rightbar-content").empty().append('<h3>METADATA</h3>');
-    $(".rightbar-content").append(accordion);
   });
 
   return false;
 }
+
+// Ajout d'un namespace dans la vue
+var addPanel = function(namespace) {
+  var panel =  $('<div class="panel panel-default" />');
+  panel.append(
+    '<div class="panel-heading" role="tab" id="' + namespace + '">' +
+      '<h4 class="panel-title">' +
+        '<a data-toggle="collapse" data-parent="#accordion" href="#collapse' + namespace + '" aria-expanded="true" aria-controls="collapse' + namespace + '">' +
+          namespace +
+        '</a>' +
+      '</h4>' +
+    '</div>'
+  );
+
+  panel.append(
+    $('<div id="collapse' + namespace + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="' + namespace + '" />').append(
+      $('<div class="panel-body"></div>')
+    )
+  );
+
+  $('#accordion').append(panel);
+
+  return $(panel).find('.panel-body').first();
+};
+
+// Mise à jour de la vue d'un namespace
+var updatePanel = function(namespace) {
+  var list = $('#' + namespace + ' + .panel-collapse .panel-body dl').empty();
+  for (type in md[namespace]) {
+    if (md[namespace][type][0].uri.length) {
+      list.append(
+        '<dt>' +
+          '<a href="' + md[namespace][type][0].uri + '">' + namespace  + ':' + type + '</a>' +
+        '</dt>'
+      );
+    } else {
+      list.append('<dt>' + namespace  + ':' + type + '</dt>');
+    }
+
+    for (i in md[namespace][type]) {
+      if (md[namespace][type][i].value.value.length) {
+        list.append(
+          '<dd>' +
+            (md[namespace][type][i].value.uri.length ? '<a href="' + md[namespace][type][i].value.uri +'">' + md[namespace][type][i].value.value + '</a>' : md[namespace][type][i].value.value) +
+          '</dd>'
+        );
+      } else {
+        list.append(
+          '<dd>' +
+            '<a href="' + md[namespace][type][i].value.uri + '">' + md[namespace][type][i].value.namespace + ':' + md[namespace][type][i].value.property + '</a>' +
+          '</dd>'
+        );
+      }
+    }
+  }
+};
+
+// Mise à jour du formulaire
+var updateForm = function() {
+  $('#mdForm').val(JSON.stringify(md));
+};

@@ -1,0 +1,11 @@
+#accordion .panel-title a {
+    display: block;
+}
+
+#accordion dd {
+    padding-left: 10px;
+}
+
+input.has-error {
+    border-color: #a94442;
+}

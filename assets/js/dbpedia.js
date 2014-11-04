@@ -39,7 +39,7 @@ var dbpedia = new function(){
 	};
 
 
-	// Récoupére toutes les informations d'une ressource
+	// Récupére toutes les informations d'une ressource
     this.getAllRessource = function(Uriressource, callback) {
         var query = [
             "SELECT * WHERE {",
@@ -52,7 +52,7 @@ var dbpedia = new function(){
     };
 
 
-    // execute une requête en sparql 
+    // execute une requête en sparql
     // $query requête sparql
     // callback function appeler une fois la requête terminé
     // parameter parametre a transmettre à la fonction de callback
