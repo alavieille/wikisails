@@ -14,7 +14,7 @@ $(document).ready(function() {
       history.back();
 
   };
-
+   
 
 });
 
@@ -40,6 +40,7 @@ var generateGraph = function(id){
 	.fail(function() {
 		console.log( "error" );
 		})
+  
 
 }
 
@@ -79,13 +80,16 @@ var initGraph = function(graph){
 
 
   var nodeInner = node.enter().append("g")
+                              
+                              .attr("data-content",addContentPopover)
+                              .attr("class", function(d){if(d.ref=="base")return "node-base"})
                               .call(force.drag)
                               .style('cursor', function(d){if(d.ref=="base") return 'move'; else return 'pointer'})
-                              .on('click',clickNode);
+                              // .on('click',clickNode);
 
   nodeInner.append("circle")
            .attr("r", nodeSize)
-           .attr("class", function(d){if(d.ref!="base") return "node-circle"})
+           .attr("class", function(d){if(d.ref!="base")return "node-circle"})
            .style("fill", nodeColor)
 
   var text = nodeInner.append("text")
@@ -107,7 +111,13 @@ var initGraph = function(graph){
       node.attr("transform", function(d) { return "translate(" + d.x + ","+ d.y + ")"; });
 
   });
+  console.log($("#graph"));
 
+  $("svg .node-base").popover({
+        'container': 'body',
+        'html':true,
+        'placement': 'top'
+  });
 }
 
 
@@ -153,5 +163,15 @@ var nodeColor =  function(node) {
     case "wikipedia":
       return "black";
   }
+}
+
+
+var addContentPopover = function(node){
+  if(node.ref=="base"){
+    console.log(node);
+    res = "<a href='/article/"+node.id+"'>Voir l'article</a>";
+    return res;
+  }
+
 }
 

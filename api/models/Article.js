@@ -49,8 +49,6 @@ module.exports = {
      createJsonGraph : function(){
 
           var linkRef = this.extractRefLink();
-          console.log(linkRef);
-          console.log(linkRef.length);
           var graph = "{ ";
 
           var nodes = ' "nodes" : [ ';
@@ -59,11 +57,11 @@ module.exports = {
 
           nodes += " { ";
           nodes += ' "name" : "'+this.title+'" ,';
+          nodes += ' "id" : "'+this.id+'" ,';
           nodes += ' "ref" : "base"';
           nodes += ' },';
 
           for (var i = 0; i < linkRef.length ; i++) {
-            console.log(linkRef[i]);
             var link = linkRef[i];
             nodes += " { ";
             nodes += ' "name" : "'+link.label+'" ,';
@@ -71,7 +69,6 @@ module.exports = {
             if(link.uri.indexOf("##refInner##") == 0){
 
               var id = link.uri.replace("##refInner##", "");
-              console.log(id);
               nodes += ' "id" : "'+id+'" ,';
               // nodes += ' "idArticle" : "'+id+'"';
               ref = "interne";

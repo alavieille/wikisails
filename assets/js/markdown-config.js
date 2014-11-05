@@ -77,7 +77,7 @@ $(document).ready(function() {
 
   // Fenètre modal d'ajout d'un attribut dans un namespace
    $(document).on('click','.attrModal',function(){
-      console.log("ok");
+      console.log($(this));
       $('.ns-name').text($(this).data('ns'));
 
       $('#nsAttr-modal').modal('show');
@@ -91,6 +91,7 @@ $(document).ready(function() {
           attr = $('#attrName').val(),
           value = $('#attrValue').val();
       $('#attrName, #attrValue').val("");
+      
 
       if (!md[ns][attr]) {
         md[ns][attr] = [];
@@ -323,7 +324,7 @@ var clickLoadArticle = function(evt){
 
       body.append(list);
       body.append(
-        $('<a href="#" class="btn btn-primary attrModal"><i class="glyphicon glyphicon-plus"></i> Ajouter un attribut</a>')
+        $('<a href="#" data-ns="'+ns+'" class="btn btn-primary attrModal"><i class="glyphicon glyphicon-plus"></i> Ajouter un attribut</a>')
       );
     }
   });

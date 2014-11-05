@@ -96,15 +96,16 @@ block rightbar-content
                                     else
                                         dt #{ns}:#{at}
                                     each val in values
-                                        if val.value.value
-                                            if val.value.uri
-                                                dd
-                                                    a(href="#{val.value.uri}") #{val.value.value}
+                                        if val.value
+                                            if val.value.value
+                                                if val.value.uri
+                                                    dd
+                                                        a(href="#{val.value.uri}") #{val.value.value}
+                                                else
+                                                    dd #{val.value.value}
                                             else
-                                                dd #{val.value.value}
-                                        else
-                                            dd
-                                                a(href="#{val.value.uri}") #{val.value.ns}:#{val.value.property}
+                                                dd
+                                                    a(href="#{val.value.uri}") #{val.value.ns}:#{val.value.property}
                             a.btn.btn-primary.attrModal(data-ns="#{ns}")
                                 i.glyphicon.glyphicon-plus
                                 |   Ajouter un attribut
