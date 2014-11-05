@@ -19,8 +19,9 @@ $(document).ready(function() {
 });
 
 var clickNode = function(node){
-  if(node.id){
+  if(node.ref !="base" && node.id){
     history.pushState({id: node.id});
+    $("svg .node-base").popover('destroy');
     generateGraph(node.id)
   }
 }
@@ -85,7 +86,7 @@ var initGraph = function(graph){
                               .attr("class", function(d){if(d.ref=="base")return "node-base"})
                               .call(force.drag)
                               .style('cursor', function(d){if(d.ref=="base") return 'move'; else return 'pointer'})
-                              // .on('click',clickNode);
+                              .on('click',clickNode);
 
   nodeInner.append("circle")
            .attr("r", nodeSize)
