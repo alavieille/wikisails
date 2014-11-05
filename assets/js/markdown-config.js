@@ -52,7 +52,7 @@ $(document).ready(function() {
       addPanel(ns);
       md[ns] = {};
       updateForm();
-
+      createVue();
       $('#ns-modal').modal("hide");
     } else {
       $('#nsName').addClass("has-error")
@@ -288,8 +288,15 @@ var clickLoadArticle = function(evt){
 
     // Insertion dans le formulaire
     updateForm();
+    createVue();
 
-    // Génération de la vue
+  });
+
+  return false;
+}
+
+var createVue = function(){
+      // Génération de la vue
     var accordion = $('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" />');
     $(".rightbar-content").empty().append('<h3>METADATA</h3>')
       .append(accordion)
@@ -327,9 +334,6 @@ var clickLoadArticle = function(evt){
         $('<a href="#" data-ns="'+ns+'" class="btn btn-primary attrModal"><i class="glyphicon glyphicon-plus"></i> Ajouter un attribut</a>')
       );
     }
-  });
-
-  return false;
 }
 
 // Ajout d'un namespace dans la vue
@@ -390,5 +394,7 @@ var updatePanel = function(namespace) {
 
 // Mise à jour du formulaire
 var updateForm = function() {
+  console.log(md);
+  console.log(JSON.stringify(md));
   $('#mdForm').val(JSON.stringify(md));
 };
