@@ -5,7 +5,8 @@ var md = {};
 // Configuration de l'éditeur de markdown pour la création et édition d'un article
 $(document).ready(function() {
   // Initialisation des metadatas
-  md = JSON.parse($('#mdForm').val());
+  if($("#mdForm").val().length)
+      md = JSON.parse($('#mdForm').val());
 
   $("#markdown-editor").markdown({
     //créer un bouton pour gérer les références d'un article
@@ -39,6 +40,7 @@ $(document).ready(function() {
   // Fenètre modal d'ajout de namespaces
   $(document).on('click', '#nsModal', function(){
     $('#ns-modal').modal("show");
+    return false;
   });
 
   // Validation et ajout du namespace
@@ -74,10 +76,12 @@ $(document).ready(function() {
   });
 
   // Fenètre modal d'ajout d'un attribut dans un namespace
-  $('.attrModal').on('click', function(){
-    $('.ns-name').text($(this).data('ns'));
+   $(document).on('click','.attrModal',function(){
+      console.log("ok");
+      $('.ns-name').text($(this).data('ns'));
 
-    $('#nsAttr-modal').modal('show');
+      $('#nsAttr-modal').modal('show');
+      return false;
   });
 
   // Validation et ajout de l'attribut

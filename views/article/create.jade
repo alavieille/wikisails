@@ -22,7 +22,7 @@ block main
                                         p #{errorAttributes.message}
                 div.form-group
                     label(for='titre').control-label Titre
-                    input(type='text', name='Article[title]', value="#{ article ? article.title : '' }", id='titre').form-control
+                    input(type='text', name='Article[title]', autocomplete="off",value="#{ article ? article.title : '' }", id='titre').form-control
                     input(type='hidden', name="Article[metadatas]", value="#{ article ? JSON.stringify(article.metadatas) : '' }", id='mdForm')
                     div#res-art-dbpedia
                 div.form-group
