@@ -25,13 +25,16 @@ module.exports = function(grunt) {
 			}]
 		},
 		build: {
-			files: [{
-				expand: true,
-				cwd: '.tmp/public',
-				src: ['**/*'],
-				dest: 'www'
-			}]
+			files: [,
+			{
+			    expand: true,
+			    cwd: './assets/styles/fonts',
+			    src: ['**/*'],
+			    dest: '.tmp/public/fonts'
+			}
+			]
 		}
+
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-copy');
