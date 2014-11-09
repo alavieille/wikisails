@@ -79,24 +79,24 @@ block rightbar-content
     h3 METADATA
     if article && article.metadatas
         div.panel-group#accordion(role="tablist", aria-multiselectable="true")
-            each attr, ns in article.metadatas
-                div.panel.panel-default
-                    div.panel-heading(role="tab", id="#{ns}")
-                        h4.panel-title
-                            a(data-toggle="collapse", data-parent="#accordion", href="#collapse#{ns}" aria-expanded="true" aria-controls="collapse#{ns}")
-                                span.caret
-                                |  #{ns}
-                    div.panel-collapse.collapse(role="tabpanel", id="collapse#{ns}", aria-labelledby="#{ns}")
-                        div.panel-body
-                            dl
-                                each values, at in attr
-                                    if values[0].uri
+            if typeof(article.metadatas) == "string"
+                - var metadatas = JSON.parse(article.metadatas)
+            else
+                - var metadatas = article.metadatas
+            each attr, ns in metadatas
+                    div.panel.panel-default
+                        div.panel-heading(role="tab", id="#{ns}")
+                            h4.panel-title
+                                a(data-toggle="collapse", data-parent="#accordion", href="#collapse#{ns}" aria-expanded="true" aria-controls="collapse#{ns}")
+                                    span.caret
+                                    |  #{ns}
+                        div.panel-collapse.collapse(role="tabpanel", id="collapse#{ns}", aria-labelledby="#{ns}")
+                            div.panel-body
+                                dl
+                                    each values, at in attr
                                         dt
                                             a(href="#{values[0].uri}") #{ns}:#{at}
-                                    else
-                                        dt #{ns}:#{at}
-                                    each val in values
-                                        if val.value
+                                        each val in values
                                             if val.value.value
                                                 if val.value.uri
                                                     dd
@@ -106,9 +106,6 @@ block rightbar-content
                                             else
                                                 dd
                                                     a(href="#{val.value.uri}") #{val.value.ns}:#{val.value.property}
-                            a.btn.btn-primary.attrModal(data-ns="#{ns}")
-                                i.glyphicon.glyphicon-plus
-                                |   Ajouter un attribut
     a.btn.btn-default.btn-block#nsModal
         i.glyphicon.glyphicon-plus
         |   Ajouter un espace de noms

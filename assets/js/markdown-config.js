@@ -77,7 +77,6 @@ $(document).ready(function() {
 
   // Fenètre modal d'ajout d'un attribut dans un namespace
    $(document).on('click','.attrModal',function(){
-      console.log($(this));
       $('.ns-name').text($(this).data('ns'));
 
       $('#nsAttr-modal').modal('show');
@@ -91,7 +90,6 @@ $(document).ready(function() {
           attr = $('#attrName').val(),
           value = $('#attrValue').val();
       $('#attrName, #attrValue').val("");
-      
 
       if (!md[ns][attr]) {
         md[ns][attr] = [];
@@ -394,7 +392,5 @@ var updatePanel = function(namespace) {
 
 // Mise à jour du formulaire
 var updateForm = function() {
-  console.log(md);
-  console.log(JSON.stringify(md));
   $('#mdForm').val(JSON.stringify(md));
 };
