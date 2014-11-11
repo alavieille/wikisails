@@ -90,7 +90,6 @@ module.exports = {
 
 
     search : function(req,res){
-        console.log("test");
         if(req.param('query')==null)
             return res.notFound("Paramètre manquant");
         else{

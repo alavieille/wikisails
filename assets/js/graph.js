@@ -6,7 +6,6 @@ $(document).ready(function() {
   }
 
   window.onpopstate = function(event) {
-    console.log(event);
     var state = event.state;
     if(state != null)
       generateGraph(state.id);
@@ -28,10 +27,6 @@ var clickNode = function(node){
 
 
 var generateGraph = function(id){
-
-  // $("#linkPrevious").attr("href",$("#id-article").val());
-  // console.log(history.pushState({id: id},"graph : "+id, "#"+id));
-	// $("#id-article").val(id);
 
 	$("#graph").html("");
 
@@ -112,7 +107,6 @@ var initGraph = function(graph){
       node.attr("transform", function(d) { return "translate(" + d.x + ","+ d.y + ")"; });
 
   });
-  console.log($("#graph"));
 
   $("svg .node-base").popover({
         'container': 'body',
@@ -169,7 +163,6 @@ var nodeColor =  function(node) {
 
 var addContentPopover = function(node){
   if(node.ref=="base"){
-    console.log(node);
     res = "<a href='/article/"+node.id+"'>Voir l'article</a>";
     return res;
   }

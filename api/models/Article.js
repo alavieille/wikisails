@@ -28,7 +28,6 @@ module.exports = {
     },
 
     extractRefLink : function(){
-        console.log("extractRefLink");
         var re = /\[([^\]]+)\]\(([^)]+)\)/g;
         var m;
 
