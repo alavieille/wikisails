@@ -2,7 +2,7 @@ $(document).ready(function() {
 	var idArticle = $("#id-article").val();
 	if(idArticle){
     generateGraph(idArticle);
-    history.pushState({id: idArticle});
+    history.pushState({id: idArticle},"","");
   }
 
   window.onpopstate = function(event) {
@@ -19,7 +19,8 @@ $(document).ready(function() {
 
 var clickNode = function(node){
   if(node.ref !="base" && node.id){
-    history.pushState({id: node.id});
+    
+    history.pushState({id: node.id},node.id,"#id"+node.id);
     $("svg .node-base").popover('destroy');
     generateGraph(node.id)
   }
